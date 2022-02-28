@@ -1,0 +1,19 @@
+using System;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int amountOfGold;
+            int amountOfCrystals;
+            int priceOfCrystal = 10;
+            Console.Write("Добрый день! Сколько у вас золота?");
+            amountOfGold = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Сколько кристаллов вы хотите купить?");
+            amountOfCrystals = Convert.ToInt32(Console.ReadLine());
+            amountOfGold -= priceOfCrystal * amountOfCrystals;
+            Console.WriteLine($"У вас {amountOfGold} золота и {amountOfCrystals} кристалов");
+        }
+    }
+}

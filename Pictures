@@ -1,0 +1,17 @@
+using System;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int paintingsCount = 52;
+            int paintingsInRow = 3;
+            int row = paintingsCount / paintingsInRow;
+            int extraPaintings = paintingsCount % paintingsInRow;
+            Console.WriteLine($"{row} " +
+            $"полностью заполненных рядов можно будет вывести");
+            Console.WriteLine($"{extraPaintings} картинка будет сверх меры");
+        }
+    }
+}

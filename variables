@@ -1,0 +1,19 @@
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name = "Iskander";
+            byte age = 25;
+            ushort yearOfBirth = 1996;
+            int daysOfLiving = age * 365;
+            short damage = -300;
+            bool isRight = true;
+            float percent = 0.57f;
+            double temperature = 36.6;
+            char symbol = '!';
+            uint amountOfProduct = 500000000;
+        }
+    }
+}

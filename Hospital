@@ -1,0 +1,19 @@
+using System;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int numberOfOldLadies;
+            int timeOfWaiting = 10;
+            int minutesInHour = 60;
+            Console.Write("Введите кол-во старушек: ");
+            numberOfOldLadies = Convert.ToInt32(Console.ReadLine());
+            int hoursOfWaiting = numberOfOldLadies * timeOfWaiting / minutesInHour;
+            int minutesOfWaiting = numberOfOldLadies * timeOfWaiting % minutesInHour;
+            Console.WriteLine($"Вы должны отстоять в очереди {hoursOfWaiting} часа и " +
+            $"{minutesOfWaiting} минут.");
+        }
+    }
+}

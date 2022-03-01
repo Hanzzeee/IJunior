@@ -1,0 +1,23 @@
+using System;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string text = "";
+            string allText = "";
+            int count = 1;
+            Console.WriteLine("Добрый день! Добро пожаловать в Складывать Слов");
+            Console.WriteLine("Напишите слова, которые вы хотите сложить");
+            Console.WriteLine("Напишите 'exit', если хотите выдать результат");
+            while (text != "exit")
+            {
+                Console.Write("Напишите слово №" + count++);
+                text = Console.ReadLine();
+                allText += text;
+            }
+            Console.WriteLine(allText);
+        }
+    }
+}

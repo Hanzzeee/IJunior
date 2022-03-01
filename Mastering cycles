@@ -11,7 +11,7 @@ namespace first_project
             Console.Write("Что вы хотите сказать?");
             text = Console.ReadLine();
             Console.Write("Сколько раз вы хотите повторить ваше сообщение?");
-            numOfRepeat = Convert.ToInt32(Console.ReadLine());
+            numberOfRepeat = Convert.ToInt32(Console.ReadLine());
             for (int i = 0; i < numOfRepeat; i++)
             {
                 Console.WriteLine(text);

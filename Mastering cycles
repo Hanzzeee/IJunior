@@ -6,7 +6,7 @@ namespace first_project
         static void Main(string[] args)
         {
             string text;
-            int numOfRepeat;
+            int numberOfRepeat;
             Console.WriteLine("Добрый день! Вас приветствует программа ЭХО");
             Console.Write("Что вы хотите сказать?");
             text = Console.ReadLine();

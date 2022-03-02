@@ -1,0 +1,129 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            float rub, usd, eur;
+            float rubToUsd = 93.56f;
+            float rubToEur = 104.48f;
+            float usdToEur = rubToUsd / rubToEur;
+            string choice, answerOfRepeat;
+            float currentAmount;
+            bool check = true;
+            Console.WriteLine("Добро пожаловать в конвертер валют!");
+            Console.Write("Напишите сколько у вас рублей ");
+            rub = Convert.ToSingle(Console.ReadLine());
+            Console.Write("Напишите сколько у вас долларов ");
+            usd = Convert.ToSingle(Console.ReadLine());
+            Console.Write("Напишите сколько у вас евро ");
+            eur = Convert.ToSingle(Console.ReadLine());
+            while (check)
+            {
+                Console.WriteLine("Выберети операцию: \nЕсли вы хотите перевести рубли в доллары, напишите 1 \n" +
+                    "Если вы хотите перевести рубли в евро, напишите 2 \nЕсли вы хотите перевести доллары в рубли, напишите 3 \n" +
+                    "Если вы хотите перевести евро в рубли, напишите 4 \nЕсли вы хотите перевести евро в доллары, напишите 5 \n" +
+                    "Если вы хотите перевести доллары в евро, напишите 6");
+                choice = Console.ReadLine();
+                Console.Write("Какую сумму вы хотите получить?");
+                currentAmount = Convert.ToSingle(Console.ReadLine());
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine("Обмен рублей на доллары");
+                        if (rub > currentAmount * rubToUsd)
+                        {
+                            rub -= currentAmount * rubToUsd;
+                            usd += currentAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine("У вас не хватает рублей");
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Обмен рублей на евро");
+                        if (rub > currentAmount * rubToEur)
+                        {
+                            rub -= currentAmount * rubToEur;
+                            eur += currentAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine("У вас не хватает рублей");
+                        }
+                        break;
+                    case "3":
+                        Console.WriteLine("Обмен долларов на рубли");
+                        if (usd > currentAmount / rubToUsd)
+                        {
+                            rub += currentAmount;
+                            usd -= currentAmount / rubToUsd;
+                        }
+                        else
+                        {
+                            Console.WriteLine("У вас не хватает долларов");
+                        }
+                        break;
+                    case "4":
+                        Console.WriteLine("Обмен евро на рубли");
+                        if (eur > currentAmount / rubToEur)
+                        {
+                            rub += currentAmount;
+                            eur -= currentAmount / rubToEur;
+                        }
+                        else
+                        {
+                            Console.WriteLine("У вас не хватает евро");
+                        }
+                        break;
+                    case "5":
+                        Console.WriteLine("Обмен евро на доллары");
+                        if (eur > currentAmount * usdToEur)
+                        {
+                            usd += currentAmount;
+                            eur -= currentAmount * usdToEur;
+                        }
+                        else
+                        {
+                            Console.WriteLine("У вас не хватает евро");
+                        }
+                        break;
+                    case "6":
+                        Console.WriteLine("Обмен долларов на евро");
+                        if (usd > currentAmount / usdToEur)
+                        {
+                            usd -= currentAmount / usdToEur;
+                            eur += currentAmount;
+                        }
+                        else
+                        {
+                            Console.WriteLine("У вас не хватает долларов");
+                        }
+                        break;
+                    default:
+                        {
+                            Console.Write("Повторите попытку");
+                        }
+                        break;
+                }
+                Console.WriteLine($"У вас {rub} рублей, {usd} долларов, {eur} евро");
+                Console.Write("Хотите продолжить обмен? (да/нет)");
+                answerOfRepeat = Console.ReadLine();
+                if (answerOfRepeat == "да")
+                {
+                    check = true;
+                }
+                else
+                {
+                    check = false;
+                }
+            }
+        }
+    }
+}

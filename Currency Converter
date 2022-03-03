@@ -113,7 +113,7 @@ namespace first_project
                         break;
                     default:
                         {
-                            Console.Write("Повторите попытку");
+                            Console.WriteLine("Повторите попытку");
                         }
                         break;
                 }

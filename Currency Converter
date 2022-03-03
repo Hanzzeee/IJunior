@@ -11,11 +11,14 @@ namespace first_project
         {
             float rub, usd, eur;
             float rubToUsd = 93.56f;
+            float usdToRub = 1 / rubToUsd;
             float rubToEur = 104.48f;
+            float eurToRub = 1 / rubToEur;
             float usdToEur = rubToUsd / rubToEur;
-            string choice, answerOfRepeat;
+            float eurToUsd = 1 / usdToEur;
+            string choice, answerOfRepeat = "да";
             float currentAmount;
-            bool check = true;
+            
             Console.WriteLine("Добро пожаловать в конвертер валют!");
             Console.Write("Напишите сколько у вас рублей ");
             rub = Convert.ToSingle(Console.ReadLine());
@@ -23,7 +26,8 @@ namespace first_project
             usd = Convert.ToSingle(Console.ReadLine());
             Console.Write("Напишите сколько у вас евро ");
             eur = Convert.ToSingle(Console.ReadLine());
-            while (check)
+
+            while (answerOfRepeat == "да")
             {
                 Console.WriteLine("Выберети операцию: \nЕсли вы хотите перевести рубли в доллары, напишите 1 \n" +
                     "Если вы хотите перевести рубли в евро, напишите 2 \nЕсли вы хотите перевести доллары в рубли, напишите 3 \n" +
@@ -32,6 +36,7 @@ namespace first_project
                 choice = Console.ReadLine();
                 Console.Write("Какую сумму вы хотите получить?");
                 currentAmount = Convert.ToSingle(Console.ReadLine());
+
                 switch (choice)
                 {
                     case "1":
@@ -63,7 +68,7 @@ namespace first_project
                         if (usd > currentAmount / rubToUsd)
                         {
                             rub += currentAmount;
-                            usd -= currentAmount / rubToUsd;
+                            usd -= currentAmount * usdToRub;
                         }
                         else
                         {
@@ -75,7 +80,7 @@ namespace first_project
                         if (eur > currentAmount / rubToEur)
                         {
                             rub += currentAmount;
-                            eur -= currentAmount / rubToEur;
+                            eur -= currentAmount * eurToRub;
                         }
                         else
                         {
@@ -98,7 +103,7 @@ namespace first_project
                         Console.WriteLine("Обмен долларов на евро");
                         if (usd > currentAmount / usdToEur)
                         {
-                            usd -= currentAmount / usdToEur;
+                            usd -= currentAmount * eurToUsd;
                             eur += currentAmount;
                         }
                         else
@@ -112,17 +117,10 @@ namespace first_project
                         }
                         break;
                 }
+
                 Console.WriteLine($"У вас {rub} рублей, {usd} долларов, {eur} евро");
                 Console.Write("Хотите продолжить обмен? (да/нет)");
                 answerOfRepeat = Console.ReadLine();
-                if (answerOfRepeat == "да")
-                {
-                    check = true;
-                }
-                else
-                {
-                    check = false;
-                }
             }
         }
     }

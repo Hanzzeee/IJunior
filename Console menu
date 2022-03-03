@@ -1,0 +1,124 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string comand;
+            bool check = true;
+
+            Console.WriteLine("Добро пожаловать в мультифункциональное приложение EasyCommand");
+            Console.WriteLine("Давайте расскажем о ключевых словах нашей программы:");
+            Console.WriteLine("SayHello - программа поприветствовала вас по имени");
+            Console.WriteLine("ChangeConsoleColor - программа поменяет цвет Консоли");
+            Console.WriteLine("MathOperation - программа колькулятор");
+            Console.WriteLine("FindSecret - программа, которая дает ответ на самый главный вопрос");
+            Console.WriteLine("Esc  - выход из программы");
+
+            while (check) {
+                Console.WriteLine("Напишите какую команду вы хотите выполнить");
+                comand = Console.ReadLine();
+
+                switch (comand)
+                {
+                    case "SayHello":
+                        string name;
+
+                        Console.Write("Введите ваше имя ");
+                        name = Console.ReadLine();
+                        Console.WriteLine($"Добрый день, {name}!");
+                        break;
+                    case "ChangeConsoleColor":
+                        string color;
+
+                        Console.Write("Выберете новый цвет консоли (Красный/Синий/Зеленый)");
+                        color = Console.ReadLine();
+
+                        switch (color)
+                        {
+                            case "Красный":
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                break;
+                            case "Синий":
+                                Console.BackgroundColor = ConsoleColor.Blue;
+                                break;
+                            case "Зеленый":
+                                Console.BackgroundColor = ConsoleColor.Green;
+                                break;
+                            default:
+                                Console.WriteLine("Я пока не знаю такой цвет, надеюсь он появится в следующем обновлении моей программы");
+                                break;
+                        }
+                        break;
+                    case "MathOperation":
+                        string sign;
+                        float num1, num2, answer;
+
+                        Console.WriteLine("Напишите знак действия, который вы хотите совершить \n '+' - сложение \n '-' - вычитание \n" +
+                            " '*' - умножение \n '/' - деление");
+                        sign = Console.ReadLine();
+                        Console.WriteLine("Напишите два числа для выбранной операции");
+                        num1 = Convert.ToSingle(Console.ReadLine());
+                        num2 = Convert.ToSingle(Console.ReadLine());
+                        
+                        switch (sign)
+                        {
+                            case "+":
+                                answer = num1 + num2;
+                                break;
+                            case "-":
+                                answer = num1 - num2;
+                                break;
+                            case "*":
+                                answer = num1 * num2;
+                                break;
+                            case "/":
+                                answer = num1 / num2;
+                                break;
+                            default:
+                                answer = 0;
+                                Console.Write("Я не знаю такой операции");
+                                break;
+                        }
+                        Console.WriteLine($"Ответ: {answer}");
+                        break;
+                    case "FindSecret":
+                        string guess = "";
+
+                        Console.WriteLine("Я знаю ответ на самый главный вопрос жизни, Вселенной и всего такого, " +
+                            "но мне нужен верный пароль");
+
+                        while (guess != "Douglas Adams")
+                        {
+                            Console.WriteLine("Напишите пароль, если нужна подсказка, напишите 'подсказка'");
+                            guess = Console.ReadLine();
+
+                            switch (guess)
+                            {
+                                case "подсказка":
+                                    Console.WriteLine("Автор книги на английском");
+                                    break;
+                                case "Douglas Adams":
+                                    Console.WriteLine("Пароль верен. Ответ на вопрос жизни, Вселенной и всего такого - это 42");
+                                    break;
+                                default:
+                                    Console.WriteLine("Пароль неверен, попробуйте заново");
+                                    break;
+                            }
+                        }
+                        break;
+
+                    case "Esc":
+                        Console.WriteLine("Было приятно помочь вам, всего доброго!");
+                        check = false;
+                        break;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name, symbol;
+            string row1 = "", row2;
+
+            Console.WriteLine("Добро пожаловать в программу по оформлению вашего имени");
+            Console.WriteLine("Впишите имя, которое вы хотите оформить");
+            name = Console.ReadLine();
+            Console.WriteLine("Впишите символ, в который вы хотите оформить ваше имя");
+            symbol = Console.ReadLine();
+
+            for (int i = 0; i < (name.Length + 2); i++)
+            {
+                row1 += symbol;
+            }
+            row2 = symbol + name + symbol;
+            Console.WriteLine(row1);
+            Console.WriteLine(row2);
+            Console.WriteLine(row1);
+        }
+            }
+        }
+    

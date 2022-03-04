@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int enemyHealth = 10000;
+            int enemyAttack = 10;
+            int heroHealth = 100;
+            int heroAttack = 100;
+            string  spell;
+            bool golem = false;
+            int golemCount = 0;
+            
+
+            Console.WriteLine("Перед вами появляется огромный Босс Троллей");
+            Console.WriteLine("Используйте заклинания для победы над Боссом");
+
+            while (enemyHealth > 0 && heroHealth > 0)
+            {
+                Console.WriteLine("Какое заклинание использовать?");
+                spell = Console.ReadLine();
+
+                switch (spell)
+                {
+                    case "Усилитус":
+                        heroAttack *= 2;
+                        break;
+                    case "Големуспоявитус":
+
+
+                }
+
+                enemyHealth -= heroAttack;
+                heroHealth -= enemyAttack;
+            }
+
+
+        }
+    }
+}

@@ -13,13 +13,23 @@ namespace first_project
             int enemyAttack = 10;
             int heroHealth = 100;
             int heroAttack = 100;
-            string  spell;
-            bool golem = false;
+            string spell;
             int golemCount = 0;
-            
+            int golemAttack = 500;
+            bool shieldcheck = false;
+            Random rand = new Random();
+
 
             Console.WriteLine("Перед вами появляется огромный Босс Троллей");
+            Console.WriteLine($"У Босса {enemyHealth} единиц жизни");
+            Console.WriteLine($"У Героя {heroHealth} единиц жизни");
             Console.WriteLine("Используйте заклинания для победы над Боссом");
+            Console.WriteLine("У вас есть четыре хаклиная:");
+            Console.WriteLine("Усилитус - увеличивает вашу атаку в два раза");
+            Console.WriteLine("Големуспоявитус - появляется один голем");
+            Console.WriteLine("Комбинушкатакус - совместная атака вместе со всеми вашими големами");
+            Console.WriteLine("Хиликус - восстанавливает 30 ед. здоровья (максимум 100)");
+            Console.WriteLine("Протекстус - накладывает на игрока щит, который уменьшает получаемый урон на половину");
 
             while (enemyHealth > 0 && heroHealth > 0)
             {
@@ -30,16 +40,60 @@ namespace first_project
                 {
                     case "Усилитус":
                         heroAttack *= 2;
+                        enemyHealth -= heroAttack + golemAttack * golemCount;
                         break;
                     case "Големуспоявитус":
+                        golemCount++;
+                        enemyHealth -= heroAttack + golemAttack * golemCount;
+                        break;
+                    case "Комбинушкатакус":
+                        
+                        int minAttack = 100 * golemCount;
+                        int maxAttack = 1000 * golemCount;
 
-
+                        int superAttack = rand.Next(minAttack, maxAttack);
+                        enemyHealth -= superAttack;
+                        Console.WriteLine($"Вы нанесли {superAttack} урока");
+                        break;
+                    case "Хиликус":
+                        if (heroHealth + 30 > 100)
+                        {
+                            heroHealth = 100;
+                        }
+                        else
+                        {
+                            heroHealth += 30;
+                        }
+                        enemyHealth -= golemAttack * golemCount;
+                        break;
+                    case "Протектус":
+                        shieldcheck = true;
+                        break;
+                    default:
+                        Console.WriteLine("Герой не знает такого заклинания");
+                        break;
                 }
-
-                enemyHealth -= heroAttack;
-                heroHealth -= enemyAttack;
+                
+                if (shieldcheck) {
+                    heroHealth -= enemyAttack / 2;
+                    shieldcheck = false;
+                }
+                else
+                {
+                    heroHealth -= enemyAttack;
+                }
+                Console.WriteLine($"Осталось жизней у Героя: {heroHealth}");
+                Console.WriteLine($"Осталось жизней у Босса: {enemyHealth}");
             }
 
+            if (enemyHealth < 0)
+            {
+                Console.WriteLine("Поздравляю, Босс повержен!!!");
+            }
+            else
+            {
+                Console.WriteLine("Вы проиграли, повезет в следующий раз");
+            }
 
         }
     }

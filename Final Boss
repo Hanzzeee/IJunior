@@ -9,16 +9,17 @@ namespace first_project
     {
         static void Main(string[] args)
         {
-            int enemyHealth = 10000;
-            int enemyAttack = 10;
-            int heroHealth = 100;
-            int heroAttack = 100;
+            float enemyHealth = 10000;
+            float enemyAttack = 10;
+            float heroHealth = 100;
+            float heroAttack = 100;
             string spell;
             int golemCount = 0;
-            int golemAttack = 500;
-            bool shieldcheck = false;
-            Random rand = new Random();
-
+            float golemAttack = 500;
+            bool haveShield = false;
+            Random random = new Random();
+            float increaseFactor = 2;
+            float decreaseFactor = 0.5f;
 
             Console.WriteLine("Перед вами появляется огромный Босс Троллей");
             Console.WriteLine($"У Босса {enemyHealth} единиц жизни");
@@ -39,7 +40,7 @@ namespace first_project
                 switch (spell)
                 {
                     case "Усилитус":
-                        heroAttack *= 2;
+                        heroAttack *= increaseFactor;
                         enemyHealth -= heroAttack + golemAttack * golemCount;
                         break;
                     case "Големуспоявитус":
@@ -47,11 +48,12 @@ namespace first_project
                         enemyHealth -= heroAttack + golemAttack * golemCount;
                         break;
                     case "Комбинушкатакус":
-                        
-                        int minAttack = 100 * golemCount;
-                        int maxAttack = 1000 * golemCount;
+                        int minFactor = 100;
+                        int maxFactor = 1000;
+                        int minAttack = minFactor * golemCount;
+                        int maxAttack = maxFactor * golemCount;
 
-                        int superAttack = rand.Next(minAttack, maxAttack);
+                        float superAttack = random.Next(minAttack, maxAttack);
                         enemyHealth -= superAttack;
                         Console.WriteLine($"Вы нанесли {superAttack} урока");
                         break;
@@ -67,16 +69,17 @@ namespace first_project
                         enemyHealth -= golemAttack * golemCount;
                         break;
                     case "Протектус":
-                        shieldcheck = true;
+                        haveShield = true;
                         break;
                     default:
                         Console.WriteLine("Герой не знает такого заклинания");
                         break;
                 }
                 
-                if (shieldcheck) {
-                    heroHealth -= enemyAttack / 2;
-                    shieldcheck = false;
+                if (haveShield)
+                {
+                    heroHealth -= enemyAttack / decreaseFactor;
+                    haveShield = false;
                 }
                 else
                 {

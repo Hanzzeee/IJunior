@@ -20,6 +20,7 @@ namespace first_project
             Random random = new Random();
             float increaseFactor = 2;
             float decreaseFactor = 0.5f;
+            float heal = 30;
 
             Console.WriteLine("Перед вами появляется огромный Босс Троллей");
             Console.WriteLine($"У Босса {enemyHealth} единиц жизни");
@@ -48,23 +49,30 @@ namespace first_project
                         enemyHealth -= heroAttack + golemAttack * golemCount;
                         break;
                     case "Комбинушкатакус":
-                        int minFactor = 100;
-                        int maxFactor = 1000;
-                        int minAttack = minFactor * golemCount;
-                        int maxAttack = maxFactor * golemCount;
+                        if (golemCount > 0)
+                        {
+                            int minFactor = 100;
+                            int maxFactor = 1000;
+                            int minAttack = minFactor * golemCount;
+                            int maxAttack = maxFactor * golemCount;
 
-                        float superAttack = random.Next(minAttack, maxAttack);
-                        enemyHealth -= superAttack;
-                        Console.WriteLine($"Вы нанесли {superAttack} урока");
+                            float superAttack = random.Next(minAttack, maxAttack);
+                            enemyHealth -= superAttack;
+                            Console.WriteLine($"Вы нанесли {superAttack} урока");
+                        }
+                        else
+                        {
+                            Console.WriteLine("У вас нет голема");
+                        }
                         break;
                     case "Хиликус":
-                        if (heroHealth + 30 > 100)
+                        if (heroHealth + heal > 100)
                         {
                             heroHealth = 100;
                         }
                         else
                         {
-                            heroHealth += 30;
+                            heroHealth += heal;
                         }
                         enemyHealth -= golemAttack * golemCount;
                         break;

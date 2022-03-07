@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] numbers = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+            int secondRow = 1;
+            int firstColumn = 0;
+            int sumOfRaw = 0;
+            int productOfColumn = 1;
+
+            for (int i = 0; i < numbers.GetLength(1); i++)
+            {
+                sumOfRaw += numbers[secondRow, i];
+            }
+
+            Console.WriteLine($"Сумма чисел из второй строки равен {sumOfRaw}");
+
+            for (int i = 0; i < numbers.GetLength(0); i++)
+            {
+                productOfColumn *= numbers[i, firstColumn];
+            }
+
+            Console.WriteLine($"Произведение чисел из первой столбца равен {productOfColumn}");
+        }
+    }
+}

@@ -1,58 +1,57 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-namespace first_project
-{
-    class Program
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    namespace first_project
     {
-        static void Main(string[] args)
+        class Program
         {
-            int[] numbers = new int[0];
-            string action;
-            bool isOpen = true;
-            int sum;
-            int number;
-
-            Console.WriteLine("Добро пожаловать в суммирующий калькулятор.\n" +
-                "Вписывайте числа, которые вы хотите просуммировать.\nЕсли вы хотите получить результат, напишите 'sum'.\n" +
-                "Если хотите выйти из программы, напишите 'exit'");
-
-            while (isOpen)
+            static void Main(string[] args)
             {
-                Console.WriteLine("Напишите число или команду");
-                action = Console.ReadLine();
-                switch (action)
+                int[] numbers = new int[0];
+                string action;
+                bool isOpen = true;
+
+                Console.WriteLine("Добро пожаловать в суммирующий калькулятор.\n" +
+                    "Вписывайте числа, которые вы хотите просуммировать.\nЕсли вы хотите получить результат, напишите 'sum'.\n" +
+                    "Если хотите выйти из программы, напишите 'exit'");
+
+                while (isOpen)
                 {
-                    case "exit":
-                        isOpen = false;
-                        break;
-                    case "sum":
-                        sum = 0;
+                    Console.WriteLine("Напишите число или команду");
+                    action = Console.ReadLine();
+                    switch (action)
+                    {
+                        case "exit":
+                            isOpen = false;
+                            break;
+                        case "sum":
+                            int sum = 0;
+                            int number;
 
-                        for (int i = 0; i < numbers.Length; i++)
-                        {
-                            sum += numbers[i];
-                        }
+                            for (int i = 0; i < numbers.Length; i++)
+                            {
+                                sum += numbers[i];
+                            }
 
-                        Console.WriteLine($"Сумма перечисленных чисел равняется {sum}");
-                        break;
-                    default:
-                        int[] tempNumbers = new int[numbers.Length + 1];
+                            Console.WriteLine($"Сумма перечисленных чисел равняется {sum}");
+                            break;
+                        default:
+                            int[] tempNumbers = new int[numbers.Length + 1];
 
-                        for (int i = 0; i < numbers.Length; i++)
-                        {
-                            tempNumbers[i] = numbers[i];
-                        }
-                        number = Convert.ToInt32(action);
-                        tempNumbers[tempNumbers.Length - 1] = number;
-                        numbers = tempNumbers;
-                        break;
+                            for (int i = 0; i < numbers.Length; i++)
+                            {
+                                tempNumbers[i] = numbers[i];
+                            }
+                            number = Convert.ToInt32(action);
+                            tempNumbers[tempNumbers.Length - 1] = number;
+                            numbers = tempNumbers;
+                            break;
+                    }
                 }
+
+
             }
-
-
         }
     }
-}

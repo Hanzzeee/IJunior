@@ -11,7 +11,7 @@ namespace first_project
         {
             Random random = new Random();
             int maxNumber = 100, minNumber = 100;
-            int number = random.Next(minNumber, maxNumber);
+            int number = random.Next(minNumber, maxNumber+1);
             int sum = 0;
             int criterion1 = 3, criterion2 = 5;
 

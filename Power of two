@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int number = random.Next();
+            int power = 0;
+            long result;
+
+            Console.WriteLine(number);
+
+            while(Math.Pow(2,power) <= number)
+            {
+                power++;
+            }
+
+            Console.WriteLine(power);
+            result = Convert.ToInt64(Math.Pow(2, power));
+            Console.WriteLine(result);
+        }
+    }
+}

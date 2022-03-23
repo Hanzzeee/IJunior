@@ -10,24 +10,26 @@ namespace first_project
         static void Main(string[] args)
         {
             Random random = new Random();
-            int minN = 1, maxN = 27;
-            int N = random.Next(minN, maxN+1);
+            int minNumber = 1;
+            int maxNumber = 27;
+            int N = random.Next(minNumber, maxNumber + 1);
             int count = 0;
             int multiplier;
+            int upperBorder = 1000;
+            int lowerBorder = 100;
 
             Console.WriteLine($"Выбранное число {N}");
 
-            for (int i = 100; i < 1000; i++)
+            for (int i = lowerBorder; i < upperBorder; i++)
             {
                 multiplier = 1;
 
-                while (multiplier * N < 1000)
+                while (multiplier * N < upperBorder)
                 {
                     if (multiplier * N == i)
                     {
                         count++;
                         Console.WriteLine(i);
-                        break;
                     }
                     multiplier++;
                 }

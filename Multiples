@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int minN = 1, maxN = 27;
+            int N = random.Next(minN, maxN+1);
+            int count = 0;
+            int multiplier;
+
+            Console.WriteLine($"Выбранное число {N}");
+
+            for (int i = 100; i < 1000; i++)
+            {
+                multiplier = 1;
+
+                while (multiplier * N < 1000)
+                {
+                    if (multiplier * N == i)
+                    {
+                        count++;
+                        Console.WriteLine(i);
+                        break;
+                    }
+                    multiplier++;
+                }
+            }
+
+            Console.WriteLine(count);
+        }
+    }
+}

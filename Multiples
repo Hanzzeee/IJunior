@@ -12,21 +12,21 @@ namespace first_project
             Random random = new Random();
             int minNumber = 1;
             int maxNumber = 27;
-            int Number = random.Next(minNumber, maxNumber + 1);
+            int number = random.Next(minNumber, maxNumber + 1);
             int count = 0;
             int multiplier;
             int upperBorder = 1000;
             int lowerBorder = 100;
 
-            Console.WriteLine($"Выбранное число {Number}");
+            Console.WriteLine($"Выбранное число {number}");
 
             for (int i = lowerBorder; i < upperBorder; i++)
             {
                 multiplier = 1;
 
-                while (multiplier * Number < upperBorder)
+                while (multiplier * number < upperBorder)
                 {
-                    if (multiplier * Number == i)
+                    if (multiplier * number == i)
                     {
                         count++;
                         Console.WriteLine(i);

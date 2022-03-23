@@ -13,16 +13,17 @@ namespace first_project
             int number = random.Next();
             int power = 0;
             long result;
+            int baseOfPower= 2;
 
             Console.WriteLine(number);
 
-            while(Math.Pow(2,power) <= number)
+            while (Math.Pow(baseOfPower, power) <= number)
             {
                 power++;
             }
 
             Console.WriteLine(power);
-            result = Convert.ToInt64(Math.Pow(2, power));
+            result = Convert.ToInt64(Math.Pow(baseOfPower, power));
             Console.WriteLine(result);
         }
     }

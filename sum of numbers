@@ -10,20 +10,22 @@ namespace first_project
         static void Main(string[] args)
         {
             Random random = new Random();
-            int maxNumber = 100, minNumber = 1;
+            int maxNumber = 100, minNumber = 100;
             int number = random.Next(minNumber, maxNumber);
             int sum = 0;
             int criterion1 = 3, criterion2 = 5;
 
-            for (int i = 0; i < number; i++)
+            if (number > 0)
             {
-                if (i % criterion1 == 0 || i % criterion2 == 0)
+                for (int i = 0; i < number; i++)
                 {
-                    sum += i;
+                    if (i % criterion1 == 0 || i % criterion2 == 0)
+                    {
+                        sum += i;
+                    }
+
                 }
-
             }
-
             Console.WriteLine(number + " " + sum);
         }
     }

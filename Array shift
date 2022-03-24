@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            int shift;
+            int tempNumber;
+
+            Console.WriteLine("Напишите на сколько вы хотите сдвинеть массив");
+            shift = Convert.ToInt32(Console.ReadLine());
+
+            if (shift >= numbers.Length)
+            {
+                shift = shift % numbers.Length;
+            }
+
+            for (int i = 0; i < shift; i++)
+            {
+                for (int j = 0; j < numbers.Length - 1; j++)
+                {
+                    tempNumber = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = tempNumber;
+                }
+            }
+
+            foreach (int number in numbers)
+            {
+                Console.Write(number + " ");
+            }
+            
+        }
+    }
+}

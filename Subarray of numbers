@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int arraySize = 30;
+            int[] numbers = new int[arraySize];
+            int maxCount = 0;
+            int answer = 0;
+            int count;
+            int upperBorder = 100;
+            int lowerBorder = 1;
+
+            for (int i = 0; i < arraySize; i++)
+            {
+                numbers[i] = random.Next(lowerBorder, upperBorder);
+                Console.WriteLine(numbers[i]);
+            }
+
+            for(int i = 0; i < numbers.Length; i++)
+            {
+                count = 1;
+
+                for (int j = i+1; j < numbers.Length; j++)
+                {
+                    if (numbers[i] == numbers[j])
+                    {
+                        count++;
+                    }
+                }
+
+                if (count > maxCount)
+                {
+                    maxCount = count;
+                    answer = numbers[i];
+                }
+            }
+
+            Console.WriteLine($"Чаще всего повторяется число {answer}, которое повторилось {maxCount} раз");
+        }
+    }
+}

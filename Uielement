@@ -1,0 +1,77 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int healthbar;
+            int healthPlace;
+            string color;
+            ConsoleColor consoleColor = ConsoleColor.White;
+
+
+            Console.WriteLine("Напишите сколько процентов у вас осталось");
+            healthbar = Convert.ToInt32( Console.ReadLine());
+            Console.WriteLine("Напишите, на какой строчке вы хотите, чтобы появился ваш бар");
+            healthPlace = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Какого цвета вы хотите получить бар?(red/yellow/green/blue/purple/black)");
+            color = Console.ReadLine();
+
+            switch (color)
+            {
+                case "red":
+                    consoleColor = ConsoleColor.Red;
+                    break;
+                case "yellow":
+                    consoleColor = ConsoleColor.Yellow;
+                    break;
+                case "green":
+                    consoleColor = ConsoleColor.Green;
+                    break;
+                case "blue":
+                    consoleColor = ConsoleColor.Blue;
+                    break;
+                case "purple":
+                    consoleColor = ConsoleColor.Magenta;
+                    break;
+                case "black":
+                    consoleColor = ConsoleColor.Black;
+                    break;
+            }
+
+            showBar(healthbar, healthPlace, consoleColor);
+
+        }
+
+        static void showBar(int procent, int place, ConsoleColor color)
+        {
+            string health = "";
+            string blankBar = "";
+            ConsoleColor consoleColor = Console.BackgroundColor;
+
+            for (int i = 0; i < procent / 10; i++)
+            {
+                health = health + "+";
+            }
+
+            Console.SetCursorPosition(0, place);
+            Console.Write('[');
+            Console.BackgroundColor = color;
+            Console.Write(health);
+            Console.BackgroundColor = consoleColor;
+
+            for (int i = 0; i < 10 - procent / 10; i++)
+            {
+                blankBar = blankBar + " ";
+            }
+
+            Console.Write(blankBar);
+            Console.Write(']');
+        }
+    }
+}

@@ -11,12 +11,15 @@ namespace first_project
         {
             int healthbar;
             int healthPlace;
+            int maxHealth;
             string color;
             ConsoleColor consoleColor = ConsoleColor.White;
 
 
             Console.WriteLine("Напишите сколько процентов у вас осталось");
-            healthbar = Convert.ToInt32( Console.ReadLine());
+            healthbar = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Напишите, сколько маскимум вашего бара?");
+            maxHealth = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Напишите, на какой строчке вы хотите, чтобы появился ваш бар");
             healthPlace = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Какого цвета вы хотите получить бар?(red/yellow/green/blue/purple/black)");
@@ -44,19 +47,20 @@ namespace first_project
                     break;
             }
 
-            showBar(healthbar, healthPlace, consoleColor);
+            ShowBar(healthbar, maxHealth, healthPlace, consoleColor);
 
         }
 
-        static void showBar(int procent, int place, ConsoleColor color)
+        static void ShowBar(int procent, int maxAmount, int place, ConsoleColor color)
         {
             string health = "";
             string blankBar = "";
             ConsoleColor consoleColor = Console.BackgroundColor;
+            int filledBar = maxAmount * procent / 100;
 
-            for (int i = 0; i < procent / 10; i++)
+            for (int i = 0; i < filledBar; i++)
             {
-                health = health + "+";
+                health += "+";
             }
 
             Console.SetCursorPosition(0, place);
@@ -65,7 +69,7 @@ namespace first_project
             Console.Write(health);
             Console.BackgroundColor = consoleColor;
 
-            for (int i = 0; i < 10 - procent / 10; i++)
+            for (int i = 0; i < maxAmount - filledBar; i++)
             {
                 blankBar = blankBar + " ";
             }

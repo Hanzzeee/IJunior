@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int number = ConvertToInt();
+        }
+        static int ConvertToInt()
+        {
+            string value;
+            bool check;
+            int number;
+
+            while (true)
+            {
+                Console.WriteLine("Впишите число");
+                value = Console.ReadLine();
+                check = int.TryParse(value, out number);
+
+                if (check)
+                {
+                    return number;
+                }
+            }
+        }
+    }
+}

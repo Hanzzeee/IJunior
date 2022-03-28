@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+ 
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.CursorVisible = false;
+
+            char[,] map = ReadMap("Map1");
+            int heroX = 0, heroY = 0;
+            int count = 1;
+
+            DrawMap(map, ref heroX, ref heroY);
+
+            while (count > 0)
+            {
+                Console.SetCursorPosition(heroY, heroX);
+                MoveHero(map, ref heroX, ref heroY);
+                count = CountCoin(map);
+            }
+
+            Console.WriteLine("Поздравляю, вы прошли первый уровень");
+        }
+
+        static int CountCoin(char[,] map)
+        {
+            int count = 0;
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    if (map[i, j] == '.')
+                    {
+                        count += 1;
+                    }
+                }
+            }
+
+            Console.SetCursorPosition(0, map.GetLength(0));
+            Console.WriteLine("                                 ");
+            Console.SetCursorPosition(0, map.GetLength(0));
+            Console.WriteLine($"Осталось собрать монет: {count}");
+            return count;
+        }
+
+        static void MoveHero(char [,] map, ref int subjectX, ref int subjectY)
+        {
+            if (Console.KeyAvailable)
+            {
+                int subjectDX = 0, subjectDY = 0;
+                ConsoleKeyInfo key = Console.ReadKey();
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        subjectDX = -1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        subjectDX = 1;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        subjectDY = 1;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        subjectDY = -1;
+                        break;
+                }
+
+                if (map[subjectX + subjectDX, subjectY + subjectDY] != '+')
+                {
+                    Console.Write(' ');
+                    subjectX += subjectDX;
+                    subjectY += subjectDY;
+                    map[subjectX, subjectY] = ' ';
+                    Console.SetCursorPosition(subjectY, subjectX);
+                    Console.Write('@');
+                }
+            }
+        }
+
+        static void DrawMap(char[,] map, ref int heroX, ref int heroY)
+        {
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j =0; j < map.GetLength(1); j++)
+                {
+                    if (map[i, j] == '@')
+                    {
+                        heroX = i;
+                        heroY = j;
+                    }
+                    else if (map[i, j] == ' ')
+                    {
+                        map[i, j] = '.';
+                    }
+
+                    Console.Write(map[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        static char[,] ReadMap(string mapName)
+        {
+            string[] newFile = File.ReadAllLines($"Maps/{mapName}.txt");
+            char[,] map = new char[newFile.Length, newFile[0].Length];
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    map[i, j] = newFile[i][j];
+                }
+            }
+
+            return map;
+        }
+    }
+}

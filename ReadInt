@@ -9,25 +9,28 @@ namespace first_project
     {
         static void Main(string[] args)
         {
-            int number = ConvertToInt();
+            int number = ReadInt();
+            Console.WriteLine(number);
         }
-        static int ConvertToInt()
+
+        static int ReadInt()
         {
             string value;
-            bool check;
+            bool isNumber = false;
             int number;
 
-            while (true)
+            while (!isNumber)
             {
                 Console.WriteLine("Впишите число");
                 value = Console.ReadLine();
-                check = int.TryParse(value, out number);
+                isNumber = int.TryParse(value, out number);
 
-                if (check)
+                if (isNumber)
                 {
                     return number;
                 }
             }
+            return 0;
         }
     }
 }

@@ -29,38 +29,16 @@ namespace first_project
                 switch (choice)
                 {
                     case "1":
-                        string nameSurname;
-                        string position;
-
-                        Console.WriteLine("Напишите ФИО");
-                        nameSurname = Console.ReadLine();
-                        Console.WriteLine("Напишите должность");
-                        position = Console.ReadLine();
-                        addPerson(nameSurname, position, ref nameSurnames, ref positions);
+                        AddPerson( ref nameSurnames, ref positions);
                         break;
                     case "2":
-                        writeAll(nameSurnames, positions);
+                        WriteAll(nameSurnames, positions);
                         break;
                     case "3":
-                        int number;
-                        string lastcheck;
-
-                        Console.WriteLine("Напишите номер досье, который вы хотите удалить");
-                        number = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Вы уверены? (да/нет)");
-                        lastcheck = Console.ReadLine();
-
-                        if (lastcheck == "да")
-                        {
-                            deletePerson(number,ref nameSurnames, ref positions);
-                        }
+                        DeletePerson(ref nameSurnames, ref positions);
                         break;
                     case "4":
-                        string surname;
-
-                        Console.WriteLine("Напишите фамилию человека, которого вы хотите найти");
-                        surname = Console.ReadLine();
-                        findPerson(surname, nameSurnames, positions);
+                        FindPerson(nameSurnames, positions);
                         break;
                     case "5":
                         isWorking = false;
@@ -71,77 +49,91 @@ namespace first_project
 
         }
 
-        static void addPerson(string point1, string point2, ref string[] points1, ref string[] points2)
+        static void AddPerson(ref string[] nameSurnames, ref string[] positions)
         {
-            string[] tempPoints1 = new string[points1.Length + 1];
-            string[] tempPoints2 = new string[points2.Length + 1];
             
-            for (int i = 0; i < points1.Length; i++)
-            {
-                tempPoints1[i] = points1[i];
-            }
-            
-            for (int i = 0; i < points2.Length; i++)
-            {
-                tempPoints2[i] = points2[i];
-            }
-            
-            tempPoints1[tempPoints1.Length - 1] = point1;
-            tempPoints2[tempPoints2.Length - 1] = point2;
-            points1 = tempPoints1;
-            points2 = tempPoints2;
+            string nameSurname;
+            string position;
+
+            Console.WriteLine("Напишите ФИО");
+            nameSurname = Console.ReadLine();
+            Console.WriteLine("Напишите должность");
+            position = Console.ReadLine();
+
+            AddElement(nameSurname, ref nameSurnames);
+            AddElement(position, ref positions);
         }
 
-        static void writeAll(string[] points1, string[] points2)
+        static void AddElement(string element, ref string[] elements)
         {
-            for (int i=0; i < points1.Length; i++)
+            string[] tempElements = new string[elements.Length + 1];
+
+            for (int i = 0; i < elements.Length; i++)
+            {
+                tempElements[i] = elements[i];
+            }
+
+            tempElements[tempElements.Length - 1] = element;
+            elements = tempElements;
+        }
+
+        static void WriteAll(string[] points1, string[] points2)
+        {
+            for (int i = 0; i < points1.Length; i++)
             {
                 Console.WriteLine($"{i + 1}) {points1[i]} - {points2[i]}");
             }
         }
 
-        static void deletePerson(int deleteElement, ref string[] points1, ref string[] points2)
+        static void DeletePerson(ref string[] nameSurnames, ref string[] positions)
         {
-            string[] tempPoints1 = new string[points1.Length - 1];
-            string[] tempPoints2 = new string[points2.Length - 1];
-            
-            for (int i = 0; i < points1.Length; i++)
+            int number;
+            string lastcheck;
+
+            Console.WriteLine("Напишите номер досье, который вы хотите удалить");
+            number = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Вы уверены? (да/нет)");
+            lastcheck = Console.ReadLine();
+
+            if (lastcheck == "да")
             {
-                if (i < deleteElement - 1)
-                {
-                    tempPoints1[i] = points1[i];
-                }
-                else if (i > deleteElement - 1)
-                {
-                    tempPoints1[i-1] = points1[i];
-                }
+                DeleteElement(number, ref nameSurnames);
+                DeleteElement(number, ref positions);
             }
-            
-            for (int i = 0; i < points2.Length; i++)
-            {
-                if (i < deleteElement - 1)
-                {
-                    tempPoints2[i] = points2[i];
-                }
-                else if (i > deleteElement - 1)
-                {
-                    tempPoints2[i - 1] = points2[i];
-                }
-            }
-            
-            points1 = tempPoints1;
-            points2 = tempPoints2;
         }
 
-        static void findPerson(string point, string[] points1, string[] points2)
+        static void DeleteElement(int number, ref string[] elements)
         {
+            string[] tempElements = new string[elements.Length - 1];
+
+            for (int i = 0; i < elements.Length; i++)
+            {
+                if (i < number - 1)
+                {
+                    tempElements[i] = elements[i];
+                }
+                else if (i > number - 1)
+                {
+                    tempElements[i - 1] = elements[i];
+                }
+            }
+            elements = tempElements;
+        }
+
+        static void FindPerson(string[] points1, string[] points2)
+        {
+            string surname;
+
+            Console.WriteLine("Напишите фамилию человека, которого вы хотите найти");
+            surname = Console.ReadLine();
+
             for (int i = 0; i < points1.Length; i++)
             {
-                if (points1[i].Contains(point))
+                if (points1[i].Contains(surname))
                 {
                     Console.WriteLine($"{i + 1}) {points1[i]} - {points2[i]}");
                 }
-            } 
+            }
         }
     }
 }

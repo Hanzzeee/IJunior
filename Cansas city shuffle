@@ -15,7 +15,6 @@ namespace first_project
 
             ShowElements(numbers);
             Shuffle(ref numbers);
-            ShowElements(numbers);
         }
 
         static void ShowElements(int[] objects)
@@ -38,12 +37,12 @@ namespace first_project
             {
                 number = random.Next(0, objects.Length);
                 tempObjects[i] = objects[number];
-                deleteElement(number, ref objects);
+                deleteObject(number, ref objects);
             }
 
             objects = tempObjects;
         }
-        static void deleteElement(int number, ref int[] objects)
+        static void deleteObject(int number, ref int[] objects)
         {
             int[] tempElements = new int[objects.Length - 1];
 

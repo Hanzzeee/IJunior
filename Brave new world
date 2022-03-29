@@ -13,11 +13,12 @@ namespace first_project
         {
             Console.CursorVisible = false;
 
-            char[,] map = ReadMap("Map1");
-            int heroX = 0, heroY = 0;
+            int heroX = 1;
+            int heroY = 1;
+            char[,] map = ReadMap("Map1", ref heroX, ref heroY);
             int count = 1;
 
-            DrawMap(map, ref heroX, ref heroY);
+            DrawMap(map);
 
             while (count > 0)
             {
@@ -51,28 +52,35 @@ namespace first_project
             return count;
         }
 
+        static void ChooseDirection(ref int subjectDX, ref int subjectDY)
+        {
+            ConsoleKeyInfo key = Console.ReadKey();
+
+            switch (key.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    subjectDX = -1;
+                    break;
+                case ConsoleKey.DownArrow:
+                    subjectDX = 1;
+                    break;
+                case ConsoleKey.RightArrow:
+                    subjectDY = 1;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    subjectDY = -1;
+                    break;
+            }
+        }
+
         static void MoveHero(char [,] map, ref int subjectX, ref int subjectY)
         {
             if (Console.KeyAvailable)
             {
-                int subjectDX = 0, subjectDY = 0;
-                ConsoleKeyInfo key = Console.ReadKey();
+                int subjectDX = 0;
+                int subjectDY = 0;
 
-                switch (key.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        subjectDX = -1;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        subjectDX = 1;
-                        break;
-                    case ConsoleKey.RightArrow:
-                        subjectDY = 1;
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        subjectDY = -1;
-                        break;
-                }
+                ChooseDirection(ref subjectDX, ref subjectDY);
 
                 if (map[subjectX + subjectDX, subjectY + subjectDY] != '+')
                 {
@@ -86,18 +94,13 @@ namespace first_project
             }
         }
 
-        static void DrawMap(char[,] map, ref int heroX, ref int heroY)
+        static void DrawMap(char[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j =0; j < map.GetLength(1); j++)
-                {
-                    if (map[i, j] == '@')
-                    {
-                        heroX = i;
-                        heroY = j;
-                    }
-                    else if (map[i, j] == ' ')
+                {   
+                    if (map[i, j] == ' ')
                     {
                         map[i, j] = '.';
                     }
@@ -109,7 +112,7 @@ namespace first_project
             }
         }
 
-        static char[,] ReadMap(string mapName)
+        static char[,] ReadMap(string mapName, ref int heroX, ref int heroY)
         {
             string[] newFile = File.ReadAllLines($"Maps/{mapName}.txt");
             char[,] map = new char[newFile.Length, newFile[0].Length];
@@ -118,6 +121,12 @@ namespace first_project
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
+                    if (map[i, j] == '@')
+                    {
+                        heroX = i;
+                        heroY = j;
+                    }
+
                     map[i, j] = newFile[i][j];
                 }
             }

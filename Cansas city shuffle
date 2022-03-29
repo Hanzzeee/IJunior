@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+ 
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] numbers = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+            ShowElements(numbers);
+            Shuffle(ref numbers);
+            ShowElements(numbers);
+        }
+
+        static void ShowElements(int[] objects)
+        {
+            for(int i = 0; i < objects.Length; i++)
+            {
+                Console.Write(objects[i] + " ");
+            }
+
+            Console.WriteLine();
+        }
+
+        static void Shuffle(ref int[] objects)
+        {
+            Random random = new Random();
+            int number;
+            int[] tempObjects = new int[objects.Length] ;
+
+            for (int i = 0; i < tempObjects.Length; i++)
+            {
+                number = random.Next(0, objects.Length);
+                tempObjects[i] = objects[number];
+                deleteElement(number, ref objects);
+            }
+
+            objects = tempObjects;
+        }
+        static void deleteElement(int number, ref int[] objects)
+        {
+            int[] tempElements = new int[objects.Length - 1];
+
+            for (int i = 0; i < objects.Length; i++)
+            {
+                if(i < number)
+                {
+                    tempElements[i] = objects[i];
+                }
+                else if (i > number)
+                {
+                    tempElements[i - 1] = objects[i];
+                }
+            }
+
+            objects = tempElements;
+        }
+    }
+}

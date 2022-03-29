@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
- 
+
 namespace first_project
 {
     class Program
@@ -19,7 +19,7 @@ namespace first_project
 
         static void ShowElements(int[] objects)
         {
-            for(int i = 0; i < objects.Length; i++)
+            for (int i = 0; i < objects.Length; i++)
             {
                 Console.Write(objects[i] + " ");
             }
@@ -31,24 +31,25 @@ namespace first_project
         {
             Random random = new Random();
             int number;
-            int[] tempObjects = new int[objects.Length] ;
+            int[] tempObjects = new int[objects.Length];
 
             for (int i = 0; i < tempObjects.Length; i++)
             {
                 number = random.Next(0, objects.Length);
                 tempObjects[i] = objects[number];
-                deleteObject(number, ref objects);
+                DeleteObject(number, ref objects);
             }
 
             objects = tempObjects;
         }
-        static void deleteObject(int number, ref int[] objects)
+
+        static void DeleteObject(int number, ref int[] objects)
         {
             int[] tempElements = new int[objects.Length - 1];
 
             for (int i = 0; i < objects.Length; i++)
             {
-                if(i < number)
+                if (i < number)
                 {
                     tempElements[i] = objects[i];
                 }

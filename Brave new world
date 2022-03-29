@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
- 
+
 namespace first_project
 {
     class Program
@@ -13,16 +13,16 @@ namespace first_project
         {
             Console.CursorVisible = false;
 
-            int heroX = 1;
-            int heroY = 1;
-            char[,] map = ReadMap("Map1", ref heroX, ref heroY);
+            int heroPosX = 1;
+            int heroPosY = 1;
+            char[,] map = ReadMap("Map1", ref heroPosX, ref heroPosY);
             int count = 1;
             DrawMap(map);
 
             while (count > 0)
             {
-                Console.SetCursorPosition(heroY, heroX);
-                MoveHero(map, ref heroX, ref heroY);
+                Console.SetCursorPosition(heroPosY, heroPosX);
+                MoveHero(map, ref heroPosX, ref heroPosY);
                 count = CountCoin(map);
             }
 
@@ -72,7 +72,7 @@ namespace first_project
             }
         }
 
-        static void MoveHero(char [,] map, ref int subjectX, ref int subjectY)
+        static void MoveHero(char[,] map, ref int subjectX, ref int subjectY)
         {
             if (Console.KeyAvailable)
             {
@@ -98,7 +98,7 @@ namespace first_project
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
-                {   
+                {
                     if (map[i, j] == ' ')
                     {
                         map[i, j] = '.';
@@ -111,7 +111,7 @@ namespace first_project
             }
         }
 
-        static char[,] ReadMap(string mapName, ref int heroX, ref int heroY)
+        static char[,] ReadMap(string mapName, ref int heroPosX, ref int heroPosY)
         {
             string[] newFile = File.ReadAllLines($"Maps/{mapName}.txt");
             char[,] map = new char[newFile.Length, newFile[0].Length];
@@ -119,12 +119,12 @@ namespace first_project
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
-                { 
+                {
                     map[i, j] = newFile[i][j];
                     if (map[i, j] == '@')
                     {
-                        heroX = i;
-                        heroY = j;
+                        heroPosX = i;
+                        heroPosY = j;
                     }
                 }
             }

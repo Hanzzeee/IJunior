@@ -17,7 +17,6 @@ namespace first_project
             int heroY = 1;
             char[,] map = ReadMap("Map1", ref heroX, ref heroY);
             int count = 1;
-
             DrawMap(map);
 
             while (count > 0)
@@ -98,7 +97,7 @@ namespace first_project
         {
             for (int i = 0; i < map.GetLength(0); i++)
             {
-                for (int j =0; j < map.GetLength(1); j++)
+                for (int j = 0; j < map.GetLength(1); j++)
                 {   
                     if (map[i, j] == ' ')
                     {
@@ -120,14 +119,13 @@ namespace first_project
             for (int i = 0; i < map.GetLength(0); i++)
             {
                 for (int j = 0; j < map.GetLength(1); j++)
-                {
+                { 
+                    map[i, j] = newFile[i][j];
                     if (map[i, j] == '@')
                     {
                         heroX = i;
                         heroY = j;
                     }
-
-                    map[i, j] = newFile[i][j];
                 }
             }
 

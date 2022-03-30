@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, string> lexicon = new Dictionary<string, string>();
+            string word;
+            bool isWorking = true;
+
+            while (isWorking)
+            {
+                Console.WriteLine("Напишите слово для поиска");
+                word = Console.ReadLine();
+                Console.WriteLine(lexicon[word]);
+            }
+        }
+    }
+}

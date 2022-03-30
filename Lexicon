@@ -19,7 +19,10 @@ namespace first_project
             {
                 Console.WriteLine("Напишите слово для поиска");
                 word = Console.ReadLine();
-                Console.WriteLine(lexicon[word]);
+                if (lexicon.ContainsKey(word))
+                {
+                    Console.WriteLine(lexicon[word]);
+                }
             }
         }
     }

@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue<int> customers = new Queue<int>();
+            Random random = new Random();
+            int sumOfPurchase = 0;
+            int amountOfPurchase = 10;
+            int minPurchase = 100;
+            int maxPurchase = 10000;
+
+            for (int i = 0; i < amountOfPurchase; i++)
+            {
+                customers.Enqueue(random.Next(minPurchase, maxPurchase));
+            }
+
+            foreach (int customer in customers)
+            {
+                sumOfPurchase += customer;
+                Console.WriteLine($"Сумма покупки - {customer}, общая выручка - {sumOfPurchase}");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+}

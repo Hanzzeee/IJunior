@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> numbers = new List<int>();
+            bool isWorking = true;
+
+            Console.WriteLine("Напишите число или напишите 'sum' для подсчета суммы всех чисел в последовательности или напишите 'exit' для выхода из программы");
+            
+            while (isWorking)
+            {
+                string text = Console.ReadLine();
+
+                if (IsDigit(text))
+                {
+                    int number = Convert.ToInt32(text);
+
+                    numbers.Add(number);
+                }
+                else if (text == "sum")
+                {
+                    Console.WriteLine(SumNumbers(numbers));
+                }
+                else if (text == "exit")
+                {
+                    isWorking = false;
+                    Console.WriteLine("Подсчет окончен");
+                }
+                else
+                {
+                    Console.WriteLine("Напишите число или существующую команду");
+                }
+            }
+        }
+
+        static int SumNumbers(List<int> numbers)
+        {
+            int result = 0;
+
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                result += numbers[i];
+            }
+
+            return result;
+        }
+
+        static bool IsDigit(string text)
+        {
+            bool result = true;
+
+            foreach (char i in text)
+            {
+                if (!char.IsDigit(i))
+                {
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+    }
+}

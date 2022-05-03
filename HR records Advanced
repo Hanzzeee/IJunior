@@ -25,13 +25,13 @@ namespace first_project
                 switch (choice)
                 {
                     case "1":
-                        Add(ref hrRecords);
+                        Add(hrRecords);
                         break;
                     case "2":
                         ShowAll(hrRecords);
                         break;
                     case "3":
-                        Delete(ref hrRecords);
+                        Delete(hrRecords);
                         break;
                     case "4":
                         isWorking = false;
@@ -43,13 +43,20 @@ namespace first_project
             }
         }
 
-        static void Delete(ref Dictionary<string, string> dictionary)
+        static void Delete(Dictionary<string, string> dictionary)
         {
             Console.WriteLine("Введите ФИО сотрудника, которого вы хотите удалить");
 
             string name = Console.ReadLine();
 
-            dictionary.Remove(name);
+            if (dictionary.ContainsKey(name))
+            {
+                dictionary.Remove(name);
+            }
+            else
+            {
+                Console.WriteLine("Такого сотрудника не обнаружено");
+            }
         }
 
         static void ShowAll(Dictionary<string, string> dictionary)
@@ -60,14 +67,12 @@ namespace first_project
             }
         }
 
-        static void Add(ref Dictionary<string, string> dictionary)
+        static void Add(Dictionary<string, string> dictionary)
         {
             Console.WriteLine("Введите ФИО");
-
             string name = Console.ReadLine();
 
             Console.WriteLine("Введите должность");
-
             string position = Console.ReadLine();
 
             dictionary.Add(name, position);

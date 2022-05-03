@@ -19,7 +19,6 @@ namespace first_project
                 Console.WriteLine("2) вывести все досье ");
                 Console.WriteLine("3) удалить досье ");
                 Console.WriteLine("4) выход");
-
                 string choice = Console.ReadLine();
 
                 switch (choice)
@@ -46,7 +45,6 @@ namespace first_project
         static void Delete(Dictionary<string, string> dictionary)
         {
             Console.WriteLine("Введите ФИО сотрудника, которого вы хотите удалить");
-
             string name = Console.ReadLine();
 
             if (dictionary.ContainsKey(name))
@@ -61,7 +59,7 @@ namespace first_project
 
         static void ShowAll(Dictionary<string, string> dictionary)
         {
-            foreach(var item in dictionary)
+            foreach (var item in dictionary)
             {
                 Console.WriteLine($"{item.Key} - {item.Value}");
             }
@@ -72,10 +70,17 @@ namespace first_project
             Console.WriteLine("Введите ФИО");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Введите должность");
-            string position = Console.ReadLine();
+            if (dictionary.ContainsKey(name))
+            {
+                Console.WriteLine("Данный сотрудник уже в базе");
+            }
+            else
+            {
+                Console.WriteLine("Введите должность");
+                string position = Console.ReadLine();
 
-            dictionary.Add(name, position);
+                dictionary.Add(name, position);
+            } 
         }
     }
 }

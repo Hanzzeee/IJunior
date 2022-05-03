@@ -56,9 +56,9 @@ namespace first_project
         {
             bool result = true;
 
-            foreach (char i in text)
+            foreach (char word in text)
             {
-                if (!char.IsDigit(i))
+                if (char.IsDigit(word) == false)
                 {
                     result = false;
                 }

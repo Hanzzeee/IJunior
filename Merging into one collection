@@ -9,17 +9,9 @@ namespace first_project
     {
         static void Main(string[] args)
         {
-            List<string> array1 = new List<string>();
-            List<string> array2 = new List<string>();
+            string[] array1 = { "1", "2", "3", "2", "5"};
+            string[] array2 = { "10", "5", "3" };
             List<string> array = new List<string>();
-
-            array1.Add("1");
-            array1.Add("2");
-            array1.Add("3");
-            array1.Add("4");
-            array2.Add("4");
-            array2.Add("10");
-            array2.Add("0");
 
             array = MergeArrays(array1, array2);
 
@@ -34,11 +26,11 @@ namespace first_project
             }
         }
 
-        static List<string> MergeArrays(List<string> array1, List<string> array2)
+        static List<string> MergeArrays(string[] array1, string[] array2)
         {
             List<string> array = new List<string>();
 
-            for (int i = 0; i < array1.Count; i++)
+            for (int i = 0; i < array1.Length; i++)
             {
                 if (array.Contains(array1[i]) == false)
                 {
@@ -46,7 +38,7 @@ namespace first_project
                 }
             }
 
-            for (int i = 0; i < array2.Count; i++)
+            for (int i = 0; i < array2.Length; i++)
             {
                 if (array.Contains(array2[i]) == false)
                 {

@@ -17,13 +17,21 @@ namespace first_project
             array1.Add("3");
             array1.Add("4");
             array2.Add("4");
-            array2.Add("5");
-            array2.Add("2");
+            array2.Add("10");
+            array2.Add("0");
 
+            for (int i = 0; i < array2.Count; i++)
+            {
+                if (array1.Contains(array2[i]) == false)
+                {
+                    array1.Add(array2[i]);
+                }
+            }
 
-
+            for (int i = 0; i < array1.Count; i++)
+            {
+                Console.Write(array1[i] + " ");
+            }
         }
-
-        
     }
 }

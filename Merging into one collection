@@ -11,6 +11,7 @@ namespace first_project
         {
             List<string> array1 = new List<string>();
             List<string> array2 = new List<string>();
+            List<string> array = new List<string>();
 
             array1.Add("1");
             array1.Add("2");
@@ -20,18 +21,40 @@ namespace first_project
             array2.Add("10");
             array2.Add("0");
 
-            for (int i = 0; i < array2.Count; i++)
+            array = MergeArrays(array1, array2);
+
+            ShowAll(array);
+        }
+
+        static void ShowAll (List<string> array)
+        {
+            for (int i = 0; i < array.Count; i++)
             {
-                if (array1.Contains(array2[i]) == false)
-                {
-                    array1.Add(array2[i]);
-                }
+                Console.Write(array[i] + " ");
             }
+        }
+
+        static List<string> MergeArrays(List<string> array1, List<string> array2)
+        {
+            List<string> array = new List<string>();
 
             for (int i = 0; i < array1.Count; i++)
             {
-                Console.Write(array1[i] + " ");
+                if (array.Contains(array1[i]) == false)
+                {
+                    array.Add(array1[i]);
+                }
             }
+
+            for (int i = 0; i < array2.Count; i++)
+            {
+                if (array.Contains(array2[i]) == false)
+                {
+                    array.Add(array2[i]);
+                }
+            }
+
+            return array;
         }
     }
 }

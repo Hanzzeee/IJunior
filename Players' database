@@ -50,7 +50,7 @@ namespace first_project
     }
     class PlayerBase
     {
-        private List<Player> players = new List<Player>();
+        private List<Player> _players = new List<Player>();
 
         public void DeletePlayer()
         {
@@ -64,7 +64,7 @@ namespace first_project
 
             if (indexOfPlayer >= 0)
             {
-                players.RemoveAt(indexOfPlayer);
+                _players.RemoveAt(indexOfPlayer);
                 Console.WriteLine("Игрок удален");
             }
             else
@@ -79,7 +79,7 @@ namespace first_project
             string nickname = Console.ReadLine();
             Player player = new Player(nickname);
 
-            players.Add(player);
+            _players.Add(player);
             player.ShowInfo();
         }
 
@@ -95,13 +95,13 @@ namespace first_project
 
             if (indexOfBannedPlayer >= 0)
             {
-                if (players[indexOfBannedPlayer].isBanned)
+                if (_players[indexOfBannedPlayer].IsBanned)
                 {
                     Console.WriteLine("Игрок уже забанен");
                 }
                 else
                 {
-                    players[indexOfBannedPlayer].ChangeBan();
+                    _players[indexOfBannedPlayer].Ban();
                     Console.WriteLine($"Игрок {bannedID} забанен");
                 }   
             }
@@ -123,13 +123,13 @@ namespace first_project
 
             if (indexOfUnbannedPlayer >= 0)
             {
-                if (players[indexOfUnbannedPlayer].isBanned == false)
+                if (_players[indexOfUnbannedPlayer].IsBanned == false)
                 {
                     Console.WriteLine("Игрок не забанен");
                 }
                 else
                 {
-                    players[indexOfUnbannedPlayer].ChangeBan();
+                    _players[indexOfUnbannedPlayer].Unban();
                     Console.WriteLine($"Игрок {unbannedID} разбанен");
                 }
             }
@@ -143,9 +143,9 @@ namespace first_project
         {
             int indexOfPlayer = -1;
 
-            for (int i = 0; i < players.Count; i++)
+            for (int i = 0; i < _players.Count; i++)
             {
-                if (players[i].Id == id)
+                if (_players[i].Id == id)
                 {
                     indexOfPlayer = i;
                 }
@@ -172,9 +172,9 @@ namespace first_project
 
         public void ShowInfo()
         {
-            for (int i = 0; i < players.Count; i++)
+            for (int i = 0; i < _players.Count; i++)
             {
-                players[i].ShowInfo();
+                _players[i].ShowInfo();
             }
         }
         
@@ -184,7 +184,7 @@ namespace first_project
         private Random _random = new Random();
         private string _nickName;
         private int _level;
-        public bool isBanned { get; private set; }
+        public bool IsBanned { get; private set; }
         public int Id { get; private set; }
 
         public Player(string nickName)
@@ -192,17 +192,22 @@ namespace first_project
             Id = _random.Next(0, 9999);
             _nickName = nickName;
             _level = 1;
-            isBanned = false;
+            IsBanned = false;
         }
 
-        public void ChangeBan()
+        public void Ban()
         {
-            isBanned = !isBanned;
+            IsBanned = true;
+        }
+
+        public void Unban()
+        {
+            IsBanned = false;
         }
 
         public void ShowInfo()
         {
-            if (isBanned)
+            if (IsBanned)
             {
                 Console.WriteLine($"Игрок {Id} забанен. Просмотр информации недоступен");
             }

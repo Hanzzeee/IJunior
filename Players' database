@@ -139,6 +139,14 @@ namespace first_project
             }
         }
 
+        public void ShowInfo()
+        {
+            for (int i = 0; i < _players.Count; i++)
+            {
+                _players[i].ShowInfo();
+            }
+        }
+
         private int FindPlayerByID(int id)
         {
             int indexOfPlayer = -1;
@@ -154,7 +162,7 @@ namespace first_project
             return indexOfPlayer;
         }
 
-        public int ConverToInt(string text)
+        private int ConverToInt(string text)
         {
             int number = -1;
 
@@ -169,16 +177,8 @@ namespace first_project
 
             return number;
         }
-
-        public void ShowInfo()
-        {
-            for (int i = 0; i < _players.Count; i++)
-            {
-                _players[i].ShowInfo();
-            }
-        }
-        
     }
+    
     class Player
     {
         private Random _random = new Random();

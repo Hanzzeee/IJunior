@@ -24,14 +24,13 @@ namespace first_project
         private string _name;
         private int _level;
         private int _health;
-        Random random = new Random();
+        private Random _random = new Random();
 
         public Player(string name)
         {
-            Random random = new Random();
             _name = name;
             _level = 1;
-            _health = random.Next(100, 300);
+            _health = _random.Next(100, 300);
         }
 
         public void ShowInfo()

@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Player player1 = new Player();
+            Player player2 = new Player();
+            Drawer drawer = new Drawer();
+
+            drawer.DrawPlayer(player1);
+            drawer.DrawPlayer(player2, '$');
+        }
+    }
+
+    class Player
+    {
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        private Random _random = new Random();
+
+        public Player()
+        {
+            X = _random.Next(0, 20);
+            Y = _random.Next(0, 20);
+        }
+    }
+
+    class Drawer
+    {
+        public void DrawPlayer(Player player, char symbol = '@')
+        {
+            Console.SetCursorPosition(player.X, player.Y);
+            Console.Write(symbol);
+        }
+    }
+}

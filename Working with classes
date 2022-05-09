@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Player player1 = new Player("Michael");
+            Player player2 = new Player("Neo");
+            Player player3 = new Player("Leonid");
+
+            player1.ShowInfo();
+            player2.ShowInfo();
+            player3.ShowInfo();
+        }
+    }
+
+    class Player
+    {
+        private string _name;
+        private int _level;
+        private int _health;
+        Random random = new Random();
+
+        public Player(string name)
+        {
+            Random random = new Random();
+            _name = name;
+            _level = 1;
+            _health = random.Next(100, 300);
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Героя зовут - {_name}, он {_level} уровня и имеет {_health} HP");
+        }
+    }
+}

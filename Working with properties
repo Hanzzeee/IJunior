@@ -20,14 +20,14 @@ namespace first_project
 
     class Player
     {
-        public int PosX { get; private set; }
-        public int PosY { get; private set; }
         private Random _random = new Random();
-
+        public int PositionX { get; private set; }
+        public int PositioY { get; private set; }
+        
         public Player()
         {
-            PosX = _random.Next(0, 20);
-            PosY = _random.Next(0, 20);
+            PositionX = _random.Next(0, 20);
+            PositioY = _random.Next(0, 20);
         }
     }
 
@@ -35,7 +35,7 @@ namespace first_project
     {
         public void DrawPlayer(Player player, char symbol = '@')
         {
-            Console.SetCursorPosition(player.PosX, player.PosY);
+            Console.SetCursorPosition(player.PositionX, player.PositioY);
             Console.Write(symbol);
         }
     }

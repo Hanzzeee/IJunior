@@ -1,0 +1,217 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            PlayerBase playerBase = new PlayerBase();
+            bool isWorking = true;
+            while (isWorking)
+            {
+                Console.WriteLine("Выберите пункт из меню:");
+                Console.WriteLine("1) Добавить нового игрока");
+                Console.WriteLine("2) Забанить игрока");
+                Console.WriteLine("3) Разбанить игрка");
+                Console.WriteLine("4) Удалить игрока из базы");
+                Console.WriteLine("5) Вывести всю информации из базы");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        playerBase.AddPlayer();
+                        break;
+                    case "2":
+                        playerBase.BanPlayer();
+                        break;
+                    case "3":
+                        playerBase.UnbanPlayer();
+                        break;
+                    case "4":
+                        playerBase.DeletePlayer();
+                        break;
+                    case "5":
+                        playerBase.ShowInfo();
+                        break;
+                    default:
+                        Console.WriteLine("Выберите пункт из меню");
+                        break;
+                }
+
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+    class PlayerBase
+    {
+        private List<Player> players = new List<Player>();
+
+        public void DeletePlayer()
+        {
+            int deleteID;
+            Console.WriteLine("Введите ID игрока, которого вы хотите удалить");
+            string strDeleteID = Console.ReadLine();
+            int indexOfPlayer;
+
+            deleteID = ConverToInt(strDeleteID);
+            indexOfPlayer = FindPlayerByID(deleteID);
+
+            if (indexOfPlayer >= 0)
+            {
+                players.RemoveAt(indexOfPlayer);
+                Console.WriteLine("Игрок удален");
+            }
+            else
+            {
+                Console.WriteLine("Игрока по этому ID не существует");
+            }
+        }
+
+        public void AddPlayer()
+        {
+            Console.WriteLine("Введите ник нового игрока");
+            string nickname = Console.ReadLine();
+            Player player = new Player(nickname);
+
+            players.Add(player);
+            player.ShowInfo();
+        }
+
+        public void BanPlayer()
+        {
+            int bannedID;
+            Console.WriteLine("Введите ID игрока, которого вы хотите забанить");
+            string strBannedID = Console.ReadLine();
+            int indexOfBannedPlayer;
+
+            bannedID = ConverToInt(strBannedID);
+            indexOfBannedPlayer = FindPlayerByID(bannedID);
+
+            if (indexOfBannedPlayer >= 0)
+            {
+                if (players[indexOfBannedPlayer].isBanned)
+                {
+                    Console.WriteLine("Игрок уже забанен");
+                }
+                else
+                {
+                    players[indexOfBannedPlayer].ChangeBan();
+                    Console.WriteLine($"Игрок {bannedID} забанен");
+                }   
+            }
+            else
+            {
+                Console.WriteLine("Игрока по этому ID не существует");
+            }
+        }
+
+        public void UnbanPlayer()
+        {
+            int unbannedID;
+            Console.WriteLine("Введите ID игрока, которого вы хотите разбанить");
+            string strUnbannedID = Console.ReadLine();
+            int indexOfUnbannedPlayer;
+
+            unbannedID = ConverToInt(strUnbannedID);
+            indexOfUnbannedPlayer = FindPlayerByID(unbannedID);
+
+            if (indexOfUnbannedPlayer >= 0)
+            {
+                if (players[indexOfUnbannedPlayer].isBanned == false)
+                {
+                    Console.WriteLine("Игрок не забанен");
+                }
+                else
+                {
+                    players[indexOfUnbannedPlayer].ChangeBan();
+                    Console.WriteLine($"Игрок {unbannedID} разбанен");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Игрока по этому ID не существует");
+            }
+        }
+
+        private int FindPlayerByID(int id)
+        {
+            int indexOfPlayer = -1;
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                if (players[i].Id == id)
+                {
+                    indexOfPlayer = i;
+                }
+            }
+
+            return indexOfPlayer;
+        }
+
+        public int ConverToInt(string text)
+        {
+            int number = -1;
+
+            if (int.TryParse(text, out number))
+            {
+                Console.WriteLine("Загрузка....");
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не число");
+            }
+
+            return number;
+        }
+
+        public void ShowInfo()
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                players[i].ShowInfo();
+            }
+        }
+        
+    }
+    class Player
+    {
+        private Random _random = new Random();
+        private string _nickName;
+        private int _level;
+        public bool isBanned { get; private set; }
+        public int Id { get; private set; }
+
+        public Player(string nickName)
+        {
+            Id = _random.Next(0, 9999);
+            _nickName = nickName;
+            _level = 1;
+            isBanned = false;
+        }
+
+        public void ChangeBan()
+        {
+            isBanned = !isBanned;
+        }
+
+        public void ShowInfo()
+        {
+            if (isBanned)
+            {
+                Console.WriteLine($"Игрок {Id} забанен. Просмотр информации недоступен");
+            }
+            else
+            {
+                Console.WriteLine($"Игрок {Id} под ником { _nickName} имеет уровень {_level}");
+            }
+
+        }
+    }
+    
+}

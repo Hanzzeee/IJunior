@@ -170,8 +170,8 @@ namespace first_project
 
     class Player
     {
-        private Random _random = new Random();
         private static List<int> _usenIds = new List<int>();
+        private Random _random = new Random();
         private string _nickName;
         private int _level;
         public bool IsBanned { get; private set; }

@@ -230,7 +230,6 @@ namespace first_project
             {
                 Console.WriteLine($"Игрок {Id} под ником { _nickName} имеет уровень {_level}");
             }
-
         }
     }
 }

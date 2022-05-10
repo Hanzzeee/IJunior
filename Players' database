@@ -54,16 +54,12 @@ namespace first_project
 
         public void DeletePlayer()
         {
-            int deleteID;
             Console.WriteLine("Введите ID игрока, которого вы хотите удалить");
-            string strDeleteID = Console.ReadLine();
-            int indexOfPlayer;
-
-            deleteID = ConverToInt(strDeleteID);
-            indexOfPlayer = FindPlayerByID(deleteID);
+            int indexOfPlayer = FindPlayerByID();
 
             if (indexOfPlayer >= 0)
             {
+                _players[indexOfPlayer].RemoveId();
                 _players.RemoveAt(indexOfPlayer);
                 Console.WriteLine("Игрок удален");
             }
@@ -85,24 +81,19 @@ namespace first_project
 
         public void BanPlayer()
         {
-            int bannedID;
             Console.WriteLine("Введите ID игрока, которого вы хотите забанить");
-            string strBannedID = Console.ReadLine();
-            int indexOfBannedPlayer;
+            int indexOfPlayer = FindPlayerByID();
 
-            bannedID = ConverToInt(strBannedID);
-            indexOfBannedPlayer = FindPlayerByID(bannedID);
-
-            if (indexOfBannedPlayer >= 0)
+            if (indexOfPlayer >= 0)
             {
-                if (_players[indexOfBannedPlayer].IsBanned)
+                if (_players[indexOfPlayer].IsBanned)
                 {
                     Console.WriteLine("Игрок уже забанен");
                 }
                 else
                 {
-                    _players[indexOfBannedPlayer].Ban();
-                    Console.WriteLine($"Игрок {bannedID} забанен");
+                    _players[indexOfPlayer].Ban();
+                    Console.WriteLine($"Игрок забанен");
                 }   
             }
             else
@@ -113,24 +104,19 @@ namespace first_project
 
         public void UnbanPlayer()
         {
-            int unbannedID;
             Console.WriteLine("Введите ID игрока, которого вы хотите разбанить");
-            string strUnbannedID = Console.ReadLine();
-            int indexOfUnbannedPlayer;
+            int indexOfPlayer = FindPlayerByID();
 
-            unbannedID = ConverToInt(strUnbannedID);
-            indexOfUnbannedPlayer = FindPlayerByID(unbannedID);
-
-            if (indexOfUnbannedPlayer >= 0)
+            if (indexOfPlayer >= 0)
             {
-                if (_players[indexOfUnbannedPlayer].IsBanned == false)
+                if (_players[indexOfPlayer].IsBanned == false)
                 {
                     Console.WriteLine("Игрок не забанен");
                 }
                 else
                 {
-                    _players[indexOfUnbannedPlayer].Unban();
-                    Console.WriteLine($"Игрок {unbannedID} разбанен");
+                    _players[indexOfPlayer].Unban();
+                    Console.WriteLine($"Игрок разбанен");
                 }
             }
             else
@@ -147,15 +133,18 @@ namespace first_project
             }
         }
 
-        private int FindPlayerByID(int id)
+        private int FindPlayerByID()
         {
+            string stringId = Console.ReadLine();
             int indexOfPlayer = -1;
+            int id = ConverToInt(stringId);
 
             for (int i = 0; i < _players.Count; i++)
             {
                 if (_players[i].Id == id)
                 {
                     indexOfPlayer = i;
+                    break;
                 }
             }
 
@@ -178,10 +167,11 @@ namespace first_project
             return number;
         }
     }
-    
+
     class Player
     {
         private Random _random = new Random();
+        private static List<int> _usenIds = new List<int>();
         private string _nickName;
         private int _level;
         public bool IsBanned { get; private set; }
@@ -189,10 +179,35 @@ namespace first_project
 
         public Player(string nickName)
         {
-            Id = _random.Next(0, 9999);
+            Id = GiveId();
             _nickName = nickName;
             _level = 1;
             IsBanned = false;
+        }
+        public void RemoveId()
+        {
+            _usenIds.Remove(Id);
+        }
+
+        private int GiveId()
+        {
+            int id = _random.Next(0, 9999);
+            bool isContains = true;
+
+            while (isContains)
+            {
+                if (_usenIds.IndexOf(id) == -1)
+                {
+                    _usenIds.Add(id);
+                    isContains = false;
+                }
+                else
+                {
+                    id = _random.Next(0, 9999);
+                }
+            }
+
+            return id;
         }
 
         public void Ban()
@@ -218,5 +233,4 @@ namespace first_project
 
         }
     }
-    
 }

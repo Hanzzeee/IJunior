@@ -11,6 +11,7 @@ namespace first_project
         {
             PlayerBase playerBase = new PlayerBase();
             bool isWorking = true;
+
             while (isWorking)
             {
                 Console.WriteLine("Выберите пункт из меню:");
@@ -184,6 +185,7 @@ namespace first_project
             _level = 1;
             IsBanned = false;
         }
+
         public void RemoveId()
         {
             _usenIds.Remove(Id);
@@ -191,7 +193,9 @@ namespace first_project
 
         private int GiveId()
         {
-            int id = _random.Next(0, 9999);
+            int firstId = 0;
+            int lastId = 9999;
+            int id = _random.Next(firstId, lastId);
             bool isContains = true;
 
             while (isContains)
@@ -203,7 +207,7 @@ namespace first_project
                 }
                 else
                 {
-                    id = _random.Next(0, 9999);
+                    id = _random.Next(firstId, lastId);
                 }
             }
 

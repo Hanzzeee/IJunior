@@ -134,8 +134,13 @@ namespace first_project
         private void GiveCard()
         {
             bool isContains = true;
-            suit = (Suit)_random.Next(0, 4);
-            value = (Value)_random.Next(0, 13);
+            int firstSuit = 0;
+            int lastSuit = 3;
+            int firstValue = 0;
+            int lastValue = 12;
+
+            suit = (Suit)_random.Next(firstSuit, lastSuit + 1);
+            value = (Value)_random.Next(firstValue, lastValue + 1);
             
             while (isContains) {
                 string card = $"{value} {suit}";
@@ -147,8 +152,8 @@ namespace first_project
                 }
                 else
                 {
-                    suit = (Suit)_random.Next(0, 4);
-                    value = (Value)_random.Next(0, 12);
+                    suit = (Suit)_random.Next(firstSuit, lastSuit + 1);
+                    value = (Value)_random.Next(firstValue, lastValue + 1);
                 }
             }
         }
@@ -161,17 +166,17 @@ namespace first_project
 
     class Deck
     {
-        private List<Card> cards = new List<Card>();
+        private List<Card> _cards = new List<Card>();
 
         public void AddCard()
         {
             Card card = new Card();
-            cards.Add(card);
+            _cards.Add(card);
         }
 
         public void ShowInfo()
         {
-            foreach (Card card in cards)
+            foreach (Card card in _cards)
             {
                 card.ShowInfo();
             }
@@ -179,8 +184,8 @@ namespace first_project
     }
     class Player
     {
+        private Deck _deck = new Deck();
         public string Name { get; private set; }
-        private Deck deck = new Deck();
 
         public Player()
         {
@@ -190,13 +195,13 @@ namespace first_project
 
         public void AddCardToPlayer()
         {
-            deck.AddCard();
+            _deck.AddCard();
         }
 
         public void ShowInfo()
         {
             Console.WriteLine(Name + " получил следующие карты");
-            deck.ShowInfo();
+            _deck.ShowInfo();
         }
     }
 }

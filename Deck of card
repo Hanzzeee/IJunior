@@ -1,0 +1,202 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int playerAmount;
+            int cardAmount;
+            int deckAmount = 52;
+            List<Player> players = new List<Player>();
+
+            Console.WriteLine("Добро пожаловать в карточную раздачу");
+            Console.WriteLine("Напишите сколько участников будет в игре?");
+            playerAmount = WriteAndCheckNumber();
+
+            for (int i = 0; i < playerAmount; i++)
+            {
+                Console.WriteLine($"Игрок {i + 1}");
+                Player player = new Player();
+                players.Add(player);
+            }
+
+            Console.WriteLine("Напишите сколько карт необходимо раздать?");
+            cardAmount = WriteAndCheckNumber();
+
+            while (CheckEnough(playerAmount, cardAmount, deckAmount))
+            {
+                cardAmount = WriteAndCheckNumber();
+            }
+
+            for (int i = 0; i < cardAmount; i++)
+            {
+                for (int j = 0; j < playerAmount; j++)
+                {
+
+                    Console.WriteLine($"Ход {players[j].Name}");
+                    players[j].AddCardToPlayer();
+                    Console.ReadKey();
+                }
+            }
+
+            Console.Clear();
+
+            foreach(Player player in players)
+            {
+                player.ShowInfo();
+                Console.ReadKey();
+            }
+        }
+
+        static bool CheckEnough(int feature1, int feature2, int maxtotal)
+        {
+            bool isMore = true;
+
+            if (feature1*feature2 <= maxtotal)
+            {
+                isMore = false;
+            }
+            else
+            {
+                Console.WriteLine("Не хватает карт, введите другое число");
+            }
+
+            return isMore;
+        }
+
+        static int WriteAndCheckNumber()
+        {
+            string text;
+            int number = 0;
+            bool isNumber = true;
+
+            while (isNumber)
+            {
+                text = Console.ReadLine();
+
+                if (int.TryParse(text, out number))
+                {
+                    isNumber = false;
+                }
+                else
+                {
+                    Console.WriteLine("Было введено не число, попробуйте снова");
+                }
+            }
+
+            return number;
+        }
+    }
+
+    enum Suit
+    {
+        Hearts,
+        Diamonds,
+        Clubs,
+        Spades
+    }
+
+    enum Value
+    {
+        Two,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Ten,
+        Jack,
+        Queen,
+        King,
+        Ace
+    }
+
+    class Card
+    {
+        private static List<string> _usedCard = new List<string>();
+        private Random _random = new Random();
+        public Suit suit { get; private set;}
+        public Value value { get; private set;}
+        
+        public Card()
+        {
+            GiveCard();
+            Console.WriteLine($"Игроку выпала -  {value} {suit}");
+        }
+
+        private void GiveCard()
+        {
+            bool isContains = true;
+            suit = (Suit)_random.Next(0, 4);
+            value = (Value)_random.Next(0, 13);
+            
+            while (isContains) {
+                string card = $"{value} {suit}";
+
+                if (_usedCard.IndexOf(card) == -1)
+                {
+                    _usedCard.Add(card);
+                    isContains = false;
+                }
+                else
+                {
+                    suit = (Suit)_random.Next(0, 4);
+                    value = (Value)_random.Next(0, 12);
+                }
+            }
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine(value + " " + suit);
+        }
+    }
+
+    class Deck
+    {
+        private List<Card> cards = new List<Card>();
+
+        public void AddCard()
+        {
+            Card card = new Card();
+            cards.Add(card);
+        }
+
+        public void ShowInfo()
+        {
+            foreach (Card card in cards)
+            {
+                card.ShowInfo();
+            }
+        }
+    }
+    class Player
+    {
+        public string Name { get; private set; }
+        private Deck deck = new Deck();
+
+        public Player()
+        {
+            Console.WriteLine("Введите Имя игрока");
+            Name = Console.ReadLine();
+        }
+
+        public void AddCardToPlayer()
+        {
+            deck.AddCard();
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine(Name + " получил следующие карты");
+            deck.ShowInfo();
+        }
+    }
+}

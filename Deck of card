@@ -16,7 +16,7 @@ namespace first_project
 
             Console.WriteLine("Добро пожаловать в карточную раздачу");
             Console.WriteLine("Напишите сколько участников будет в игре?");
-            playerAmount = WriteAndCheckNumber();
+            playerAmount = ReadNumber();
 
             for (int i = 0; i < playerAmount; i++)
             {
@@ -26,11 +26,11 @@ namespace first_project
             }
 
             Console.WriteLine("Напишите сколько карт необходимо раздать?");
-            cardAmount = WriteAndCheckNumber();
+            cardAmount = ReadNumber();
 
             while (CheckEnough(playerAmount, cardAmount, deckAmount))
             {
-                cardAmount = WriteAndCheckNumber();
+                cardAmount = ReadNumber();
             }
 
             for (int i = 0; i < cardAmount; i++)
@@ -68,8 +68,8 @@ namespace first_project
 
             return isMore;
         }
-
-        static int WriteAndCheckNumber()
+            
+        static int ReadNumber()
         {
             string text;
             int number = 0;

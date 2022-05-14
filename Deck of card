@@ -11,7 +11,7 @@ namespace first_project
         {
             int playerAmount;
             int cardAmount;
-            int deckAmount = 13*4;
+            int deckAmount = 52;
             List<Player> players = new List<Player>();
 
             Console.WriteLine("Добро пожаловать в карточную раздачу");

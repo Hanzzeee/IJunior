@@ -11,7 +11,7 @@ namespace first_project
         {
             int playerAmount;
             int cardAmount;
-            int deckAmount = 52;
+            int deckAmount = 13*4;
             List<Player> players = new List<Player>();
 
             Console.WriteLine("Добро пожаловать в карточную раздачу");
@@ -28,32 +28,18 @@ namespace first_project
             Console.WriteLine("Напишите сколько карт необходимо раздать?");
             cardAmount = ReadNumber();
 
-            while (CheckEnough(playerAmount, cardAmount, deckAmount))
+            while (IsEnoughCard(playerAmount, cardAmount, deckAmount))
             {
                 cardAmount = ReadNumber();
             }
 
-            for (int i = 0; i < cardAmount; i++)
-            {
-                for (int j = 0; j < playerAmount; j++)
-                {
-
-                    Console.WriteLine($"Ход {players[j].Name}");
-                    players[j].AddCardToPlayer();
-                    Console.ReadKey();
-                }
-            }
-
-            Console.Clear();
-
-            foreach(Player player in players)
-            {
-                player.ShowInfo();
-                Console.ReadKey();
-            }
+            Dealer dealer = new Dealer(playerAmount, cardAmount, players);
+            
+            dealer.StartGame();
+            dealer.ShowInfo();
         }
 
-        static bool CheckEnough(int feature1, int feature2, int maxtotal)
+        static bool IsEnoughCard(int feature1, int feature2, int maxtotal)
         {
             bool isMore = true;
 
@@ -118,49 +104,115 @@ namespace first_project
         Ace
     }
 
-    class Card
+    class Dealer
     {
-        private static List<string> _usedCard = new List<string>();
-        private Random _random = new Random();
-        public Suit suit { get; private set;}
-        public Value value { get; private set;}
-        
-        public Card()
+        private int _playerAmount;
+        private int _cardAmount;
+        private List<Player> _players;
+        private List<string> _cards = new List<String>();
+
+        public Dealer(int playerAmount, int cardAmount, List<Player> players)
         {
-            GiveCard();
-            Console.WriteLine($"Игроку выпала -  {value} {suit}");
+            _playerAmount = playerAmount;
+            _cardAmount = cardAmount;
+            _players = players;
+
+            FindAllCards();
         }
 
-        private void GiveCard()
+        private void FindAllCards()
         {
-            bool isContains = true;
-            int firstSuit = 0;
             int lastSuit = 3;
-            int firstValue = 0;
             int lastValue = 12;
+            string card;
 
-            suit = (Suit)_random.Next(firstSuit, lastSuit + 1);
-            value = (Value)_random.Next(firstValue, lastValue + 1);
-            
-            while (isContains) {
-                string card = $"{value} {suit}";
-
-                if (_usedCard.IndexOf(card) == -1)
+            for (int i = 0; i < lastSuit + 1; i++)
+            {
+                for (int j = 0; j < lastValue + 1; j++)
                 {
-                    _usedCard.Add(card);
-                    isContains = false;
+                    card = $"{(Suit)i} {(Value)j}";
+                    _cards.Add(card);
                 }
-                else
+            }
+        }
+
+        public void StartGame()
+        {
+            for (int i = 0; i < _cardAmount; i++)
+            {
+                for (int j = 0; j < _playerAmount; j++)
                 {
-                    suit = (Suit)_random.Next(firstSuit, lastSuit + 1);
-                    value = (Value)_random.Next(firstValue, lastValue + 1);
+                    Console.WriteLine($"Ход {_players[j].Name}");
+                    Card card = GiveCard();
+                    _players[j].AddCardToPlayer(card);
+                    Console.ReadKey();
                 }
             }
         }
 
         public void ShowInfo()
         {
-            Console.WriteLine(value + " " + suit);
+            Console.Clear();
+
+            foreach (Player player in _players)
+            {
+                player.ShowInfo();
+                Console.ReadKey();
+            }
+        }
+
+        private Card GiveCard()
+        {
+            string cardText = "";
+            Card card = new Card();
+            Random random = new Random();
+            bool isContain = true;
+
+            while (isContain)
+            {
+                cardText = $"{card.Suit} {card.Value}";
+                if (_cards.IndexOf(cardText) == -1 )
+                {
+                    card = new Card();
+                }
+                else
+                {
+                    isContain = false;
+                }
+            }
+
+            _cards.RemoveAt(_cards.IndexOf(cardText));
+            Console.WriteLine($"Игроку выпала -  {card.Value} {card.Suit}");
+
+            return card;
+        }
+    }
+
+    class Card
+    { 
+        private Random _random = new Random();
+        public Suit Suit { get; private set;}
+        public Value Value { get; private set;}
+        
+        public Card()
+        {
+            GiveCard();
+        }
+
+        private void GiveCard()
+        {
+            int firstSuit = 0;
+            int lastSuit = 3;
+            int firstValue = 0;
+            int lastValue = 12;
+
+            Suit = (Suit)_random.Next(firstSuit, lastSuit + 1);
+            Value = (Value)_random.Next(firstValue, lastValue + 1);
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine(Value + " " + Suit);
         }
     }
 
@@ -168,9 +220,8 @@ namespace first_project
     {
         private List<Card> _cards = new List<Card>();
 
-        public void AddCard()
+        public void AddCard(Card card)
         {
-            Card card = new Card();
             _cards.Add(card);
         }
 
@@ -182,6 +233,7 @@ namespace first_project
             }
         }
     }
+
     class Player
     {
         private Deck _deck = new Deck();
@@ -193,9 +245,9 @@ namespace first_project
             Name = Console.ReadLine();
         }
 
-        public void AddCardToPlayer()
+        public void AddCardToPlayer(Card card)
         {
-            _deck.AddCard();
+            _deck.AddCard(card);
         }
 
         public void ShowInfo()

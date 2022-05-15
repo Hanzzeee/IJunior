@@ -1,0 +1,201 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string menuNumber;
+            Library library = new Library();
+            bool isWorking = true;
+
+            while (isWorking)
+            {
+                Console.WriteLine("Добро пожаловать в библиотеку! Выберите пункт меню");
+                Console.WriteLine("1) Добавить книгу");
+                Console.WriteLine("2) Удалить книгу");
+                Console.WriteLine("3) Показать все книги");
+                Console.WriteLine("4) Найти книги по названию");
+                Console.WriteLine("5) Найти книги по автору");
+                Console.WriteLine("6) Найти книги по году изданию");
+                menuNumber = Console.ReadLine();
+
+                switch (menuNumber)
+                {
+                    case "1":
+                        library.AddBook();
+                        break;
+                    case "2":
+                        library.DeleteBook();
+                        break;
+                    case "3":
+                        library.ShowInfo("0");
+                        break;
+                    case "4":
+                        library.ShowInfo("1");
+                        break;
+                    case "5":
+                        library.ShowInfo("2");
+                        break;
+                    case "6":
+                        library.ShowInfo("3");
+                        break;
+                }
+
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+
+    class Book
+    {
+        public string Name { get; private set; }
+        public string Author { get; private set; }
+        public int YearOfPublication { get; private set; }
+
+        public Book()
+        {
+            Console.WriteLine("Напишите название книги");
+            Name = Console.ReadLine();
+            Console.WriteLine("Напишите имя автора");
+            Author = Console.ReadLine();
+            Console.WriteLine("Напишите год публикации");
+            YearOfPublication = ReadNumber();
+        }
+
+        private int ReadNumber()
+        {
+            int number = 0;
+            string text;
+            bool isNumber = false;
+
+            while (isNumber == false)
+            {
+                text = Console.ReadLine();
+
+                if (Int32.TryParse(text, out number))
+                {
+                    isNumber = true;
+                }
+                else
+                {
+                    Console.WriteLine("Было введено не число, попробуйте заново");
+                }
+            }
+
+            return number;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Author} - {Name} ({YearOfPublication})");
+        }
+    }
+
+    class Library
+    {
+        private List<Book> _books = new List<Book>();
+
+        public void AddBook()
+        {
+            Book book = new Book();
+            _books.Add(book);
+        }
+
+        public void ShowInfo(string choice)
+        {
+            switch (choice)
+            {
+                case "0":
+                    for (int i = 0; i < _books.Count; i++)
+                    {
+                        Console.Write(i + 1 + ") ");
+                        _books[i].ShowInfo();
+                    }
+                    break;
+                case "1":
+                    Console.WriteLine("Напишите название книг, которую вы хотите найти");
+                    string name = Console.ReadLine();
+                    foreach (Book book in _books)
+                    {
+                        if (book.Name == name)
+                        {
+                            book.ShowInfo();
+                        }
+                    }
+                    break;
+                case "2":
+                    Console.WriteLine("Напишите автора книг, которую вы хотите найти");
+                    string author = Console.ReadLine();
+                    foreach (Book book in _books)
+                    {
+                        if (book.Author == author)
+                        {
+                            book.ShowInfo();
+                        }
+                    }
+                    break;
+                case "3":
+                    Console.WriteLine("Напишите год книг, которую вы хотите найти");
+                    int yearOfPublication = ReadNumber();
+                    foreach (Book book in _books)
+                    {
+                        if (book.YearOfPublication == yearOfPublication)
+                        {
+                            book.ShowInfo();
+                        }
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Выберите существующий пункт меню");
+                    break;
+            }
+        }
+
+        public void DeleteBook()
+        {
+            int NumberOfBook;
+
+            ShowInfo("0");
+            Console.WriteLine("Выберите номер книги, которую вы хотите удалить");
+            NumberOfBook = ReadNumber();
+
+            if (NumberOfBook > 0 && NumberOfBook < _books.Count + 1)
+            {
+                _books.RemoveAt(NumberOfBook - 1);
+            }
+            else
+            {
+                Console.WriteLine("Книги под таким номером не сушествует");
+            }
+        }
+
+        private int ReadNumber()
+        {
+            int number = 0;
+            string text;
+            bool isNumber = false;
+
+            while (isNumber == false)
+            {
+                text = Console.ReadLine();
+
+                if (Int32.TryParse(text, out number))
+                {
+                    isNumber = true;
+                }
+                else
+                {
+                    Console.WriteLine("Было введено не число, попробуйте заново");
+                }
+            }
+
+            return number;
+        }
+    }
+}

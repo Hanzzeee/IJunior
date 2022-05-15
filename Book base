@@ -131,6 +131,7 @@ namespace first_project
 
         private void ShowByYear()
         {
+            bool isExist = false;
             Console.WriteLine("Напишите год книг, которую вы хотите найти");
             int yearOfPublication = Program.ReadInt();
 
@@ -139,12 +140,20 @@ namespace first_project
                 if (book.YearOfPublication == yearOfPublication)
                 {
                     book.ShowInfo();
+                    isExist = true;
                 }
+            }
+
+            if (isExist == false)
+            {
+                Console.WriteLine("Книги с таким годом публикации не были найдены");
             }
         }
 
         private void ShowByAuthor()
         {
+            bool isExist = false;
+
             Console.WriteLine("Напишите автора книг, которую вы хотите найти");
             string author = Console.ReadLine();
 
@@ -153,12 +162,19 @@ namespace first_project
                 if (book.Author == author)
                 {
                     book.ShowInfo();
+                    isExist = true;
                 }
+            }
+
+            if (isExist == false)
+            {
+                Console.WriteLine("Книги с таким автором не были найдены");
             }
         }
 
         private void ShowByName()
         {
+            bool isExist = false;
             Console.WriteLine("Напишите название книг, которую вы хотите найти");
             string name = Console.ReadLine();
 
@@ -167,7 +183,13 @@ namespace first_project
                 if (book.Name == name)
                 {
                     book.ShowInfo();
+                    isExist = true;
                 }
+            }
+
+            if (isExist == false)
+            {
+                Console.WriteLine("Книги с таким названием не были найдены");
             }
         }
 

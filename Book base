@@ -50,25 +50,8 @@ namespace first_project
                 Console.Clear();
             }
         }
-    }
 
-    class Book
-    {
-        public string Name { get; private set; }
-        public string Author { get; private set; }
-        public int YearOfPublication { get; private set; }
-
-        public Book()
-        {
-            Console.WriteLine("Напишите название книги");
-            Name = Console.ReadLine();
-            Console.WriteLine("Напишите имя автора");
-            Author = Console.ReadLine();
-            Console.WriteLine("Напишите год публикации");
-            YearOfPublication = ReadNumber();
-        }
-
-        private int ReadNumber()
+        public static int ReadInt()
         {
             int number = 0;
             string text;
@@ -89,6 +72,23 @@ namespace first_project
             }
 
             return number;
+        }
+    }
+
+    class Book
+    {
+        public string Name { get; private set; }
+        public string Author { get; private set; }
+        public int YearOfPublication { get; private set; }
+
+        public Book()
+        {
+            Console.WriteLine("Напишите название книги");
+            Name = Console.ReadLine();
+            Console.WriteLine("Напишите имя автора");
+            Author = Console.ReadLine();
+            Console.WriteLine("Напишите год публикации");
+            YearOfPublication = Program.ReadInt();
         }
 
         public void ShowInfo()
@@ -112,48 +112,71 @@ namespace first_project
             switch (choice)
             {
                 case "0":
-                    for (int i = 0; i < _books.Count; i++)
-                    {
-                        Console.Write(i + 1 + ") ");
-                        _books[i].ShowInfo();
-                    }
+                    ShowAllBook();
                     break;
                 case "1":
-                    Console.WriteLine("Напишите название книг, которую вы хотите найти");
-                    string name = Console.ReadLine();
-                    foreach (Book book in _books)
-                    {
-                        if (book.Name == name)
-                        {
-                            book.ShowInfo();
-                        }
-                    }
+                    ShowByName();
                     break;
                 case "2":
-                    Console.WriteLine("Напишите автора книг, которую вы хотите найти");
-                    string author = Console.ReadLine();
-                    foreach (Book book in _books)
-                    {
-                        if (book.Author == author)
-                        {
-                            book.ShowInfo();
-                        }
-                    }
+                    ShowByAuthor();
                     break;
                 case "3":
-                    Console.WriteLine("Напишите год книг, которую вы хотите найти");
-                    int yearOfPublication = ReadNumber();
-                    foreach (Book book in _books)
-                    {
-                        if (book.YearOfPublication == yearOfPublication)
-                        {
-                            book.ShowInfo();
-                        }
-                    }
+                    ShowByYear();
                     break;
                 default:
                     Console.WriteLine("Выберите существующий пункт меню");
                     break;
+            }
+        }
+
+        private void ShowByYear()
+        {
+            Console.WriteLine("Напишите год книг, которую вы хотите найти");
+            int yearOfPublication = Program.ReadInt();
+
+            foreach (Book book in _books)
+            {
+                if (book.YearOfPublication == yearOfPublication)
+                {
+                    book.ShowInfo();
+                }
+            }
+        }
+
+        private void ShowByAuthor()
+        {
+            Console.WriteLine("Напишите автора книг, которую вы хотите найти");
+            string author = Console.ReadLine();
+
+            foreach (Book book in _books)
+            {
+                if (book.Author == author)
+                {
+                    book.ShowInfo();
+                }
+            }
+        }
+
+        private void ShowByName()
+        {
+            Console.WriteLine("Напишите название книг, которую вы хотите найти");
+            string name = Console.ReadLine();
+
+            foreach (Book book in _books)
+            {
+                if (book.Name == name)
+                {
+                    book.ShowInfo();
+                }
+            }
+        }
+
+        private void ShowAllBook()
+        {
+            for (int i = 0; i < _books.Count; i++)
+            {
+                Console.Write(i + 1 + ") ");
+                _books[i].ShowInfo();
             }
         }
 
@@ -163,7 +186,7 @@ namespace first_project
 
             ShowInfo("0");
             Console.WriteLine("Выберите номер книги, которую вы хотите удалить");
-            NumberOfBook = ReadNumber();
+            NumberOfBook = Program.ReadInt();
 
             if (NumberOfBook > 0 && NumberOfBook < _books.Count + 1)
             {
@@ -173,29 +196,6 @@ namespace first_project
             {
                 Console.WriteLine("Книги под таким номером не сушествует");
             }
-        }
-
-        private int ReadNumber()
-        {
-            int number = 0;
-            string text;
-            bool isNumber = false;
-
-            while (isNumber == false)
-            {
-                text = Console.ReadLine();
-
-                if (Int32.TryParse(text, out number))
-                {
-                    isNumber = true;
-                }
-                else
-                {
-                    Console.WriteLine("Было введено не число, попробуйте заново");
-                }
-            }
-
-            return number;
         }
     }
 }

@@ -11,9 +11,9 @@ namespace first_project
         {
             Seller seller = new Seller();
 
-            seller.AddProduct("Телефон", 10, 15000);
-            seller.AddProduct("Наушники", 15, 10000);
-            seller.AddProduct("Ноутбук", 5, 35000);
+            seller.AddProduct("Телефон", 15000, 10);
+            seller.AddProduct("Наушники", 10000, 15);
+            seller.AddProduct("Ноутбук", 35000, 5);
 
             Console.WriteLine("Добро пожаловать в магазин электроники");
             Console.WriteLine("Ознакомтесь со списоком наших продуктов");
@@ -30,13 +30,13 @@ namespace first_project
             seller.ShowInfo();
         }
 
-        public static Product FindProductByName(string name, List<Product> products)
+        public static Stack FindProductByName(string name, List<Stack> products)
         {
-            Product product1 = products[0];
+            Stack product1 = products[0];
 
-            foreach (Product product in products)
+            foreach (Stack product in products)
             {
-                if (product.Name == name)
+                if (product.GetName() == name)
                 {
                     product1 = product;
                     break;
@@ -83,15 +83,15 @@ namespace first_project
             Console.WriteLine($"Покупатель хочет купить {ProductDesired} в количествe {AmountDesired} шт. У него с собой {Money} руб");
         }
 
-        public void BuyProduct(Product product, int amount)
+        public void BuyProduct(Stack product, int amount)
         {
-            Money -= product.Price * amount;
+            Money -= product.GetPrice() * amount;
         }
     }
 
     class Seller
     {
-        private List<Product> _products = new List<Product>();
+        private List<Stack> _products = new List<Stack>();
         private int _revenue = 0;
         private Queue<Customer> _customers = new Queue<Customer>();
 
@@ -105,6 +105,7 @@ namespace first_project
                 _products[i].ShowInfo();
             }
         }
+
         public void ShowRevenue()
         {
             Console.WriteLine($"За сегодня заработали {_revenue} руб.");
@@ -112,7 +113,7 @@ namespace first_project
 
         public void AddProduct(string name, int amount, int price)
         {
-            Product product = new Product(name, amount, price);
+            Stack product = new Stack(name, amount, price);
 
             _products.Add(product);
         }
@@ -128,14 +129,14 @@ namespace first_project
         {
             foreach (Customer customer in _customers)
             {
-                Product product;
+                Stack product;
 
                 Console.WriteLine("");
                 customer.ShowInfo();
 
                 product = Program.FindProductByName(customer.ProductDesired, _products);
 
-                if (product.Price * customer.AmountDesired > customer.Money)
+                if (product.GetPrice() * customer.AmountDesired > customer.Money)
                 {
                     Console.WriteLine("У покупателя не хватает денег");
                 }
@@ -149,45 +150,73 @@ namespace first_project
                     {
                         int amount = 0;
                         Console.WriteLine("Не хватает товара, продали сколько есть на складе");
-                        _revenue += product.Amount * product.Price;
+                        _revenue += product.Amount * product.GetPrice();
                         product.Deliver(product.Amount);
                         customer.BuyProduct(product, amount);
                     }
                 }
                 else
                 {
-                    _revenue += customer.AmountDesired * product.Price;
+                    _revenue += customer.AmountDesired * product.GetPrice();
                     product.Deliver(customer.AmountDesired);
                     customer.BuyProduct(product, customer.AmountDesired);
                     Console.WriteLine("Товар продан");
                 }
-                
+
                 Console.ReadKey();
             }
+        }
+    }
+
+    class Stack
+    {
+        private Product _product;
+        public int Amount;
+
+        public string GetName()
+        {
+            string name = _product.Name;
+            return name;
+        }
+
+        public int GetPrice()
+        {
+            int price = _product.Price;
+            return price;
+        }
+
+        public Stack (string name, int price, int amount)
+        {
+            _product = new Product(name, price);
+            Amount = amount;
+        }
+
+        public void ShowInfo()
+        {
+            _product.ShowInfo();
+            Console.WriteLine($"На складе находится {Amount} шт.");
+        }
+
+        public void Deliver (int amount)
+        {
+            Amount -= amount;
         }
     }
 
     class Product
     {
         public string Name { get; private set; }
-        public int Amount { get; private set; }
         public int Price { get; private set; }
 
-        public Product(string name, int amount, int price)
+        public Product(string name, int price)
         {
             Name = name;
-            Amount = amount;
             Price = price;
-        }
-
-        public void Deliver(int amount)
-        {
-            Amount -= amount;
         }
 
         public void ShowInfo()
         {
-            Console.WriteLine($"Товар {Name} продается по {Price} рублей. Количество на складе: {Amount} шт.");
+            Console.Write($"Товар {Name} продается по {Price} рублей");
         }
     }
 }

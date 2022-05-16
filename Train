@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Direction direction = new Direction();
+            direction.ShowInfo();
+        }
+    }
+
+    enum City
+    {
+        Moscow,
+        SaintPetersburg,
+        Kazan,
+        Novgorod,
+        Sochi,
+        Chelni,
+        Kaliningrad,
+        Sevastopol,
+        Ekaterenburg,
+        Kaluga,
+        Grozniy
+    }
+
+    class Direction
+    {
+        private Random _random = new Random();
+        private City _deparuteCity;
+        private City _arrivalCity;
+
+        public Direction()
+        {
+            bool isEqual = true;
+            _deparuteCity = (City)_random.Next((int)City.Moscow, (int)City.Grozniy);
+
+            while (isEqual)
+            {
+                _arrivalCity = (City)_random.Next((int)City.Moscow, (int)City.Grozniy);
+
+                if (_arrivalCity != _deparuteCity)
+                {
+                    isEqual = false;
+                }
+            }
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Поезд проследует из {_deparuteCity} в {_arrivalCity}");
+        }
+    }
+}

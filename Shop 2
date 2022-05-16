@@ -1,0 +1,193 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Seller seller = new Seller();
+
+            seller.AddProduct("Телефон", 10, 15000);
+            seller.AddProduct("Наушники", 15, 10000);
+            seller.AddProduct("Ноутбук", 5, 35000);
+
+            Console.WriteLine("Добро пожаловать в магазин электроники");
+            Console.WriteLine("Ознакомтесь со списоком наших продуктов");
+            seller.ShowInfo();
+
+            for (int i = 0; i < 20; i++)
+            {
+                seller.AddCustomer();
+            }
+
+            seller.ServeCustomers();
+            Console.Clear();
+            seller.ShowRevenue();
+            seller.ShowInfo();
+        }
+
+        public static Product FindProductByName(string name, List<Product> products)
+        {
+            Product product1 = products[0];
+
+            foreach (Product product in products)
+            {
+                if (product.Name == name)
+                {
+                    product1 = product;
+                    break;
+                }
+            }
+
+            return product1;
+        }
+    }
+
+    class Customer
+    {
+        private Random _random = new Random();
+        public int Money { get; private set; }
+        public string ProductDesired { get; private set; }
+        public int AmountDesired { get; private set; }
+
+        public Customer()
+        {
+            int maxMoney = 100000;
+            int minMoney = 10000;
+            int numberOfChoice = 3;
+            int maxAmount = 3;
+            int choiceNumber = _random.Next(0, numberOfChoice);
+            Money = _random.Next(minMoney, maxMoney);
+            AmountDesired = _random.Next(1, maxAmount + 1);
+
+            switch (choiceNumber)
+            {
+                case 0:
+                    ProductDesired = "Телефон";
+                    break;
+                case 1:
+                    ProductDesired = "Наушники";
+                    break;
+                case 2:
+                    ProductDesired = "Ноутбук";
+                    break;
+            }
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Покупатель хочет купить {ProductDesired} в количествe {AmountDesired} шт. У него с собой {Money} руб");
+        }
+
+        public void BuyProduct(Product product, int amount)
+        {
+            Money -= product.Price * amount;
+        }
+    }
+
+    class Seller
+    {
+        private List<Product> _products = new List<Product>();
+        private int _revenue = 0;
+        private Queue<Customer> _customers = new Queue<Customer>();
+
+        public void ShowInfo()
+        {
+            Console.WriteLine("Товаров на складе:");
+
+            for (int i = 0; i < _products.Count; i++)
+            {
+                Console.Write($"{i + 1}) ");
+                _products[i].ShowInfo();
+            }
+        }
+        public void ShowRevenue()
+        {
+            Console.WriteLine($"За сегодня заработали {_revenue} руб.");
+        }
+
+        public void AddProduct(string name, int amount, int price)
+        {
+            Product product = new Product(name, amount, price);
+
+            _products.Add(product);
+        }
+
+        public void AddCustomer()
+        {
+            Customer customer = new Customer();
+
+            _customers.Enqueue(customer);
+        }
+
+        public void ServeCustomers()
+        {
+            foreach (Customer customer in _customers)
+            {
+                Product product;
+
+                Console.WriteLine("");
+                customer.ShowInfo();
+
+                product = Program.FindProductByName(customer.ProductDesired, _products);
+
+                if (product.Price * customer.AmountDesired > customer.Money)
+                {
+                    Console.WriteLine("У покупателя не хватает денег");
+                }
+                else if (customer.AmountDesired > product.Amount)
+                {
+                    if (product.Amount == 0)
+                    {
+                        Console.WriteLine("Нет товара на складе");
+                    }
+                    else
+                    {
+                        int amount = 0;
+                        Console.WriteLine("Не хватает товара, продали сколько есть на складе");
+                        _revenue += product.Amount * product.Price;
+                        product.Deliver(product.Amount);
+                        customer.BuyProduct(product, amount);
+                    }
+                }
+                else
+                {
+                    _revenue += customer.AmountDesired * product.Price;
+                    product.Deliver(customer.AmountDesired);
+                    customer.BuyProduct(product, customer.AmountDesired);
+                    Console.WriteLine("Товар продан");
+                }
+                
+                Console.ReadKey();
+            }
+        }
+    }
+
+    class Product
+    {
+        public string Name { get; private set; }
+        public int Amount { get; private set; }
+        public int Price { get; private set; }
+
+        public Product(string name, int amount, int price)
+        {
+            Name = name;
+            Amount = amount;
+            Price = price;
+        }
+
+        public void Deliver(int amount)
+        {
+            Amount -= amount;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Товар {Name} продается по {Price} рублей. Количество на складе: {Amount} шт.");
+        }
+    }
+}

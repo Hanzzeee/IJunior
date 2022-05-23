@@ -1,0 +1,262 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace first_project
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Direction direction = new Direction();
+
+            direction.SellTickets();
+            direction.ShowInfo();
+        }
+    }
+
+    enum City
+    {
+        Moscow,
+        SaintPetersburg,
+        Kazan,
+        Novgorod,
+        Sochi,
+        Chelni,
+        Kaliningrad,
+        Sevastopol,
+        Ekaterenburg,
+        Kaluga,
+        Grozniy
+    }
+
+    enum TypeOfCar
+    {
+        Compartment,
+        SecondClass,
+        Lux,
+        DiningCar,
+        SitingCar,
+        Locomotive
+    }
+
+   
+
+    class Direction
+    {
+        private Random _random = new Random();
+        private City _deparuteCity;
+        private City _arrivalCity;
+        private List<Passenger> _passengers = new List<Passenger>();
+        public Train Train { get; private set; }
+
+        public Direction()
+        {
+            bool isEqual = true;
+            _deparuteCity = (City)_random.Next((int)City.Moscow, (int)City.Grozniy);
+
+            while (isEqual)
+            {
+                _arrivalCity = (City)_random.Next((int)City.Moscow, (int)City.Grozniy);
+
+                if (_arrivalCity != _deparuteCity)
+                {
+                    isEqual = false;
+                }
+            }
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Поезд проследует из {_deparuteCity} в {_arrivalCity}. \nБилетов продано - {_passengers.Count}");
+            Train.ShowInfo();
+        }
+
+        public void SellTickets()
+        {
+            int maxPassenger = 1000;
+            int minPassenger = 10;
+            int numberOfPassenger = _random.Next(minPassenger, maxPassenger);
+
+            for (int i = 0; i < numberOfPassenger; i++)
+            {
+                Passenger passenger = new Passenger();
+                _passengers.Add(passenger);
+            }
+
+            Train = new Train(_passengers);
+        }
+    }
+
+    class Car
+    {
+        private Random _random = new Random();
+        private TypeOfCar _typeOfCar;
+        private List<Seat> _seats = new List<Seat>();
+        public int Capacity { get; private set; }
+
+        public Car(TypeOfCar typeOfCar)
+        {
+            _typeOfCar = TypeOfCar.Locomotive;
+
+            switch (_typeOfCar)
+            {
+                case TypeOfCar.SitingCar:
+                    Capacity = 66;
+                    break;
+                case TypeOfCar.SecondClass:
+                    Capacity = 54;
+                    break;
+                case TypeOfCar.Compartment:
+                    Capacity = 32;
+                    break;
+                case TypeOfCar.Lux:
+                    Capacity = 6;
+                    break;
+                case TypeOfCar.DiningCar:
+                    Capacity = 0;
+                    break;
+                case TypeOfCar.Locomotive:
+                    Capacity = 0;
+                    break;
+            }
+
+            for (int i = 0; i < Capacity; i++)
+            {
+                Seat seat = new Seat(i + 1);
+                _seats.Add(seat);
+            }
+        }
+
+        public Car()
+        {
+            _typeOfCar = (TypeOfCar)_random.Next((int)TypeOfCar.Compartment, (int)TypeOfCar.Locomotive);
+
+            switch (_typeOfCar)
+            {
+                case TypeOfCar.SitingCar:
+                    Capacity = 66;
+                    break;
+                case TypeOfCar.SecondClass:
+                    Capacity = 54;
+                    break;
+                case TypeOfCar.Compartment:
+                    Capacity = 32;
+                    break;
+                case TypeOfCar.Lux:
+                    Capacity = 6;
+                    break;
+                case TypeOfCar.DiningCar:
+                    Capacity = 0;
+                    break;
+                case TypeOfCar.Locomotive:
+                    Capacity = 0;
+                    break;
+            }
+
+            for (int i = 0; i < Capacity; i++)
+            {
+                Seat seat = new Seat(i + 1);
+                _seats.Add(seat);
+            }
+        }
+
+        public void BookSeats(int amountOfSeats)
+        {
+            for (int i = 0; i < amountOfSeats; i++)
+            {
+                _seats[i].Book();
+            }
+        }
+
+        private int AmountOfTakenSeats()
+        {
+            int amount = 0;
+
+            foreach (Seat seat in _seats)
+            {
+                if (seat.IsTaken)
+                {
+                    amount += 1;
+                }
+            }
+
+            return amount;
+        }
+
+        public void ShowInfo()
+        {
+            int amountOfTakenSeats = AmountOfTakenSeats();
+
+            Console.WriteLine($"Вагон типа {_typeOfCar}. Мест занято {amountOfTakenSeats} из {Capacity}");
+        }
+
+    }
+
+    class Train
+    {
+        private List<Car> _train = new List<Car>();
+
+        public Train(List<Passenger> passengers)
+        {
+            int numberOfPassengers = passengers.Count;
+            int trainCapacity = 0;
+            Car lokomotive = new Car(TypeOfCar.Locomotive);
+
+            _train.Add(lokomotive);
+
+            while (trainCapacity < numberOfPassengers)
+            {
+                Car car = new Car();
+                int carCapacity = car.Capacity;
+
+                if (trainCapacity + carCapacity < numberOfPassengers)
+                {
+                    car.BookSeats(carCapacity);
+                }
+                else
+                {
+                    car.BookSeats(carCapacity - (numberOfPassengers - trainCapacity));
+                }
+
+                trainCapacity += car.Capacity;
+                _train.Add(car);
+            }
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Поезд состоит из {_train.Count} вагонов");
+
+            for (int i = 0; i < _train.Count; i++)
+            {
+                Console.Write($"{i+1}) ");
+                _train[i].ShowInfo();
+            }
+        }
+    }
+
+    class Passenger
+    {
+        private string _name;
+        private string _sex;
+    }
+
+    class Seat
+    {
+        private int _number;
+        public bool IsTaken {get; private set;}
+
+        public Seat(int number)
+        {
+            _number = number;
+            IsTaken = false;
+        }
+
+        public void Book()
+        {
+            IsTaken = true;
+        }
+    }
+}
